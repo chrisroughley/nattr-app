@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import zxcvbn from "zxcvbn";
-import { createUser } from "../../utils/api/api";
+import { createUser } from "../../utils/firebase-utils/api";
 
 const SignUpForm = () => {
   const emailRegex =
@@ -9,19 +9,13 @@ const SignUpForm = () => {
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = async (data, e) => {
-    console.log("DATA");
-    console.log(data, e);
     if (data.password === data.confirmationPassword) {
-      try {
-        await createUser(data.email, data.password);
-        console.log("user created");
-        setValue("username", "", { shouldValidate: true });
-        setValue("email", "", { shouldValidate: true });
-        setValue("password", "", { shouldValidate: true });
-        setValue("confirmationPassword", "", { shouldValidate: true });
-      } catch (err) {
-        console.log(err.message);
-      }
+      await createUser(data.email, data.password);
+      console.log("user created");
+      setValue("username", "", { shouldValidate: true });
+      setValue("email", "", { shouldValidate: true });
+      setValue("password", "", { shouldValidate: true });
+      setValue("confirmationPassword", "", { shouldValidate: true });
     } else {
       console.log("passwords do not match");
     }
@@ -33,9 +27,7 @@ const SignUpForm = () => {
   };
 
   const passwordCheck = (password) => {
-    console.log(password);
     let { score: passwordScore } = zxcvbn(password);
-    console.log(passwordScore);
     if (passwordScore === 4) {
       console.log("strong");
     } else if (passwordScore === 3) {

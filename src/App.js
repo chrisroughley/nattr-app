@@ -1,5 +1,7 @@
 import "./App.css";
 
+import { useEffect } from "react";
+
 import { Route, Switch } from "react-router-dom";
 
 import LandingPage from "./components/pages/LandingPage";

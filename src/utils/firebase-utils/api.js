@@ -12,8 +12,6 @@ export const createUser = async (email, password) => {
     const user = userCredential.user;
     console.log(user);
   } catch (err) {
-    throw new Error(err.message);
-    const errorCode = err.code;
     const errorMessage = err.message;
     console.log("ERROR: ", errorMessage);
   }
