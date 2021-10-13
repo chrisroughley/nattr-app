@@ -37,7 +37,8 @@ function App() {
       {isInitialized ? (
         <Switch>
           <Route exact path="/">
-            {isLogged ? <Redirect to="/messenger" /> : <LandingPage />}
+            {/* {isLogged ? <Redirect to="/messenger" /> : <LandingPage />} */}
+            <LandingPage />
           </Route>
           <Route exact path="/login">
             <LoginPage />

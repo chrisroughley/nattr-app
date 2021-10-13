@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
+
 import zxcvbn from "zxcvbn";
+
 import { createUser } from "../../utils/firebaseUtils";
 
 const SignUpForm = () => {
+  const history = useHistory();
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const emailRegex =
@@ -19,6 +23,7 @@ const SignUpForm = () => {
       setValue("email", "", { shouldValidate: true });
       setValue("password", "", { shouldValidate: true });
       setValue("confirmationPassword", "", { shouldValidate: true });
+      history.push("/messenger");
     } else {
       console.log("passwords do not match");
     }
