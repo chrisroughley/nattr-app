@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import zxcvbn from "zxcvbn";
-import { createUser } from "../../utils/firebase-utils/api";
+import { createUser } from "../../utils/firebaseUtils";
 
 const SignUpForm = () => {
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -26,16 +29,11 @@ const SignUpForm = () => {
     console.log(error);
   };
 
+  //Generate a password strength score from 0-4
   const passwordCheck = (e) => {
     const password = e.target.value;
     const { score: passwordScore } = zxcvbn(password);
-    if (passwordScore === 4) {
-      //do something
-    } else if (passwordScore === 3) {
-      //do something
-    } else {
-      //do something
-    }
+    setPasswordStrength(passwordScore);
   };
 
   const registerOptions = {

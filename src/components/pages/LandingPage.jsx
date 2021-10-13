@@ -9,7 +9,7 @@ const LandingPage = () => {
   const userLoading = useSelector((state) => state.user.loading);
   const userError = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
-
+  console.log("hello");
   return (
     <div>
       <h1>Landing Page</h1>

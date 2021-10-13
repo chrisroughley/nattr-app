@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { setIsLogged } from "../../state/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const MessengerPage = () => {
+  const dispatch = useDispatch();
+
   const openVideoChat = () => {
     window.open(
       "video",
@@ -9,12 +13,18 @@ const MessengerPage = () => {
     );
   };
 
+  const handleSignOut = () => {
+    dispatch(setIsLogged(false));
+  };
+
   return (
     <div>
       <h1>Messenger Page</h1>
       <button onClick={openVideoChat}>Video</button>
       <Link to="/account">Account Managemnet</Link>
-      <Link to="/">Sign Out</Link>
+      <Link onClick={handleSignOut} to="/">
+        Sign Out
+      </Link>
     </div>
   );
 };

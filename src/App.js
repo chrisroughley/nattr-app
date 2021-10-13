@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -15,44 +15,49 @@ import VideoChatPage from "./components/pages/VideoChatPage";
 import BadURLPage from "./components/pages/BadURLPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "./state/slices/userSlice";
+import { getUserById, setIsLogged } from "./state/slices/userSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const isLogged = useSelector((state) => state.user.isLogged);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("USER ID: ", user.uid);
+        dispatch(setIsLogged(true));
         dispatch(getUserById(user.uid));
       }
+      setIsInitialized(true);
     });
   }, []);
 
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/">
-          {/* {user.name ? <Redirect to="/messenger" /> : <LandingPage />} */}
-          <LandingPage />
-        </Route>
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
-        <Route exact path="/account">
-          <AccountManagementPage />
-        </Route>
-        <Route exact path="/messenger">
-          <MessengerPage />
-        </Route>
-        <Route exact path="/video">
-          <VideoChatPage />
-        </Route>
-        <Route>
-          <BadURLPage />
-        </Route>
-      </Switch>
+      {isInitialized ? (
+        <Switch>
+          <Route exact path="/">
+            {isLogged ? <Redirect to="/messenger" /> : <LandingPage />}
+          </Route>
+          <Route exact path="/login">
+            <LoginPage />
+          </Route>
+          <Route exact path="/account">
+            <AccountManagementPage />
+          </Route>
+          <Route exact path="/messenger">
+            <MessengerPage />
+          </Route>
+          <Route exact path="/video">
+            <VideoChatPage />
+          </Route>
+          <Route>
+            <BadURLPage />
+          </Route>
+        </Switch>
+      ) : (
+        <div>initializing</div>
+      )}
     </div>
   );
 }

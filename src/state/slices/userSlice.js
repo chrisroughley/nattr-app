@@ -25,9 +25,14 @@ export const userSlice = createSlice({
   initialState: {
     loading: "idle",
     user: {},
+    isLogged: false,
     error: { message: "" },
   },
-  reducers: {},
+  reducers: {
+    setIsLogged: (state, action) => {
+      state.isLogged = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserById.pending, (state, action) => {
       if (state.loading === "idle") {
@@ -50,4 +55,5 @@ export const userSlice = createSlice({
   },
 });
 
+export const { setIsLogged } = userSlice.actions;
 export default userSlice.reducer;

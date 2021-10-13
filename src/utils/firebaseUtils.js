@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { auth } from "../firebase";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "@firebase/auth";
 
 export const createUser = async (email, password) => {
   try {
