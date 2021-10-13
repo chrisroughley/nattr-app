@@ -29,11 +29,8 @@ const LandingPage = () => {
       >
         DECREMENT
       </button>
-      <p>
-        USER:{" "}
-        {userLoading === "pending" ? "user loading" : JSON.stringify(user)}
-      </p>
-      <p>ERROR: {JSON.stringify(userError)}</p>
+      <p>USER: {userLoading === "pending" ? "user loading" : user.name}</p>
+      <p>ERROR: {userError.message || "no error"}</p>
       <button
         onClick={() => {
           dispatch(getUserById("dwR5idJCDiHlmvBKC2oL"));

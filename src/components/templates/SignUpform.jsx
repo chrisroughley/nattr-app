@@ -8,11 +8,11 @@ const SignUpForm = () => {
 
   const { register, handleSubmit, setValue } = useForm();
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     if (data.password === data.confirmationPassword) {
       await createUser(data.email, data.password);
       console.log("user created");
-      setValue("username", "", { shouldValidate: true });
+      setValue("displayName", "", { shouldValidate: true });
       setValue("email", "", { shouldValidate: true });
       setValue("password", "", { shouldValidate: true });
       setValue("confirmationPassword", "", { shouldValidate: true });
@@ -21,20 +21,49 @@ const SignUpForm = () => {
     }
   };
 
-  const onError = (error, e) => {
+  const onError = (error) => {
     console.log("ERROR");
-    console.log(error, e);
+    console.log(error);
   };
 
-  const passwordCheck = (password) => {
-    let { score: passwordScore } = zxcvbn(password);
+  const passwordCheck = (e) => {
+    const password = e.target.value;
+    const { score: passwordScore } = zxcvbn(password);
     if (passwordScore === 4) {
-      console.log("strong");
+      //do something
     } else if (passwordScore === 3) {
-      console.log("medium");
+      //do something
     } else {
-      console.log("weak");
+      //do something
     }
+  };
+
+  const registerOptions = {
+    displayName: {
+      required: "missing display name",
+      minLength: { value: 2, message: "invalid display name" },
+      maxLength: { value: 20, message: "invalid display name" },
+    },
+    email: {
+      required: "missing email",
+      pattern: {
+        value: emailRegex,
+        message: "invalid email",
+      },
+    },
+    password: {
+      required: "missing password",
+      minLength: { value: 8, message: "invalid password" },
+      maxLength: { value: 30, message: "invalid password" },
+    },
+    confirmationPassword: {
+      required: "missing confirmation password",
+      minLength: { value: 8, message: "invalid confirmation password" },
+      maxLength: {
+        value: 30,
+        message: "invalid confirmation password",
+      },
+    },
   };
 
   return (
@@ -42,53 +71,30 @@ const SignUpForm = () => {
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <label>
-          Username:
+          Display Name:
           <input
             type="text"
-            {...register("username", {
-              required: "missing username",
-              minLength: { value: 2, message: "invalid username" },
-              maxLength: { value: 20, message: "invalid username" },
-            })}
+            {...register("displayName", registerOptions.displayName)}
           />
         </label>
         <label>
           Email:
-          <input
-            type="text"
-            {...register("email", {
-              required: "missing email",
-              pattern: {
-                value: emailRegex,
-                message: "invalid email",
-              },
-            })}
-          />
+          <input type="text" {...register("email", registerOptions.email)} />
         </label>
         <label>
           Password:
           <input
-            onInput={(e) => {
-              passwordCheck(e.target.value);
-            }}
+            onInput={passwordCheck}
             type="password"
-            {...register("password", {
-              required: "missing password",
-              minLength: { value: 8, message: "invalid password" },
-              maxLength: { value: 30, message: "invalid password" },
-            })}
+            {...register("password", registerOptions.password)}
           />
           Confirm Password:
           <input
             type="password"
-            {...register("confirmationPassword", {
-              required: "missing confirmation password",
-              minLength: { value: 8, message: "invalid confirmation password" },
-              maxLength: {
-                value: 30,
-                message: "invalid confirmation password",
-              },
-            })}
+            {...register(
+              "confirmationPassword",
+              registerOptions.confirmationPassword
+            )}
           />
         </label>
         <input type="submit" value="submit" />

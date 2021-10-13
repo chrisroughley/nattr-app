@@ -25,7 +25,7 @@ export const userSlice = createSlice({
   initialState: {
     loading: "idle",
     user: {},
-    error: false,
+    error: { message: "" },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -42,9 +42,9 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUserById.rejected, (state, action) => {
       if (state.loading === "pending") {
+        console.log(action.payload);
         state.loading = "idle";
-        state.error = true;
-        state.user = action.payload;
+        state.error.message = action.payload;
       }
     });
   },
