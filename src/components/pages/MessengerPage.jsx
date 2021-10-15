@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
-import { setIsLogged } from "../../state/slices/userSlice";
+import { setIsLogged, clearUser } from "../../state/slices/userSlice";
 import { useDispatch } from "react-redux";
+
+import { auth } from "../../utils/firebase";
+import { signOut } from "@firebase/auth";
+
+import DevComponent from "../DevComponent";
 
 const MessengerPage = () => {
   const dispatch = useDispatch();
@@ -13,8 +18,14 @@ const MessengerPage = () => {
     );
   };
 
-  const handleSignOut = () => {
-    dispatch(setIsLogged(false));
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      dispatch(setIsLogged(false));
+      dispatch(clearUser());
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (
@@ -25,6 +36,7 @@ const MessengerPage = () => {
       <Link onClick={handleSignOut} to="/">
         Sign Out
       </Link>
+      <DevComponent></DevComponent>
     </div>
   );
 };

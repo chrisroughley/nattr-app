@@ -32,6 +32,9 @@ export const userSlice = createSlice({
     setIsLogged: (state, action) => {
       state.isLogged = action.payload;
     },
+    clearUser: (state, action) => {
+      state.user = {};
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserById.pending, (state, action) => {
@@ -55,5 +58,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setIsLogged } = userSlice.actions;
+export const { setIsLogged, clearUser } = userSlice.actions;
 export default userSlice.reducer;

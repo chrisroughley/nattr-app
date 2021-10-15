@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 
+import { useDispatch } from "react-redux";
+import { getUserById } from "../../state/slices/userSlice";
+
 import zxcvbn from "zxcvbn";
 
 import { createUser } from "../../utils/firebaseUtils";
@@ -9,6 +12,7 @@ import { createUser } from "../../utils/firebaseUtils";
 const SignUpForm = () => {
   const history = useHistory();
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const dispatch = useDispatch();
 
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -17,13 +21,20 @@ const SignUpForm = () => {
 
   const onSubmit = async (data) => {
     if (data.password === data.confirmationPassword) {
-      await createUser(data.email, data.password);
-      console.log("user created");
-      setValue("displayName", "", { shouldValidate: true });
-      setValue("email", "", { shouldValidate: true });
-      setValue("password", "", { shouldValidate: true });
-      setValue("confirmationPassword", "", { shouldValidate: true });
-      history.push("/messenger");
+      const userId = await createUser(
+        data.displayName,
+        data.email,
+        data.password
+      );
+      if (!userId.error) {
+        dispatch(getUserById(userId));
+        console.log("user created");
+        setValue("displayName", "", { shouldValidate: true });
+        setValue("email", "", { shouldValidate: true });
+        setValue("password", "", { shouldValidate: true });
+        setValue("confirmationPassword", "", { shouldValidate: true });
+        history.push("/messenger");
+      }
     } else {
       console.log("passwords do not match");
     }

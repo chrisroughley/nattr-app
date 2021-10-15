@@ -22,7 +22,7 @@ function App() {
   const isLogged = useSelector((state) => state.user.isLogged);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setIsLogged(true));
@@ -30,7 +30,7 @@ function App() {
       }
       setIsInitialized(true);
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">

@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../state/slices/counterSlice";
 import { getUserById } from "../../state/slices/userSlice";
+
+import DevComponent from "../DevComponent";
 
 const LandingPage = () => {
   const count = useSelector((state) => state.counter.value);
@@ -38,6 +41,7 @@ const LandingPage = () => {
       >
         GET USER
       </button>
+      <DevComponent></DevComponent>
     </div>
   );
 };
