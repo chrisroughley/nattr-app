@@ -47,7 +47,8 @@ function App() {
             <AccountManagementPage />
           </Route>
           <Route exact path="/messenger">
-            <MessengerPage />
+            {isLogged ? <MessengerPage /> : <Redirect to="/" />}
+            {/* <MessengerPage /> */}
           </Route>
           <Route exact path="/video">
             <VideoChatPage />
