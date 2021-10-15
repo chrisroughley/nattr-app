@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import SignUpForm from "../templates/SignUpform";
+import SignInForm from "../templates/SignInForm";
 
 const LoginPage = () => {
   return (
@@ -9,6 +10,7 @@ const LoginPage = () => {
       <Link to="/account">Account Management</Link>
       <Link to="/messenger">Messenger</Link>
       <SignUpForm></SignUpForm>
+      <SignInForm></SignInForm>
     </div>
   );
 };

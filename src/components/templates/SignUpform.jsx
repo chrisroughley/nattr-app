@@ -41,8 +41,7 @@ const SignUpForm = () => {
   };
 
   const onError = (error) => {
-    console.log("ERROR");
-    console.log(error);
+    console.log("SIGN UP FORM ERROR: ", error);
   };
 
   //Generate a password strength score from 0-4

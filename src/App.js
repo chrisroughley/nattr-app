@@ -44,12 +44,12 @@ function App() {
             <LoginPage />
           </Route>
           <Route exact path="/account">
-            {isLogged ? <AccountManagementPage /> : <Redirect to="/" />}
-            {/* <AccountManagementPage /> */}
+            {/* {isLogged ? <AccountManagementPage /> : <Redirect to="/" />} */}
+            <AccountManagementPage />
           </Route>
           <Route exact path="/messenger">
-            {isLogged ? <MessengerPage /> : <Redirect to="/" />}
-            {/* <MessengerPage /> */}
+            {/* {isLogged ? <MessengerPage /> : <Redirect to="/" />} */}
+            <MessengerPage />
           </Route>
           <Route exact path="/video">
             <VideoChatPage />

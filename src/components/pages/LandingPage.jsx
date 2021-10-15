@@ -17,30 +17,7 @@ const LandingPage = () => {
     <div>
       <h1>Landing Page</h1>
       <Link to="/login">Login</Link>
-      <p>{count}</p>
-      <button
-        onClick={() => {
-          dispatch(increment());
-        }}
-      >
-        INCREMENT
-      </button>
-      <button
-        onClick={() => {
-          dispatch(decrement());
-        }}
-      >
-        DECREMENT
-      </button>
-      <p>USER: {userLoading === "pending" ? "user loading" : user.name}</p>
-      <p>ERROR: {userError.message || "no error"}</p>
-      <button
-        onClick={() => {
-          dispatch(getUserById("dwR5idJCDiHlmvBKC2oL"));
-        }}
-      >
-        GET USER
-      </button>
+
       <DevComponent></DevComponent>
     </div>
   );
