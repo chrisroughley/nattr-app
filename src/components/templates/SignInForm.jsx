@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 
-import { signInUser } from "../../utils/firebaseUtils";
+import { signInUser, signInWithGoogle } from "../../utils/firebaseUtils";
 
 import { useDispatch } from "react-redux";
 import { getUserById } from "../../state/slices/userSlice";
@@ -24,6 +24,12 @@ const SignInForm = () => {
 
   const onError = (error) => {
     console.log("SIGN IN FORM ERROR: ", error);
+  };
+
+  const handleGoogleSignIn = async () => {
+    const userId = await signInWithGoogle();
+    dispatch(getUserById(userId));
+    history.push("/messenger");
   };
 
   const registerOptions = {
@@ -51,6 +57,7 @@ const SignInForm = () => {
         </label>
         <input type="submit" value="submit" />
       </form>
+      <button onClick={handleGoogleSignIn}>sign in with google</button>
     </div>
   );
 };

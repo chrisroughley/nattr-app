@@ -1,10 +1,12 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 
 import { auth, db } from "./firebase";
-import { doc, setDoc } from "@firebase/firestore";
+import { doc, setDoc, getDoc } from "@firebase/firestore";
 
 export const createUser = async (displayName, email, password) => {
   try {
@@ -14,8 +16,8 @@ export const createUser = async (displayName, email, password) => {
       password
     );
     const user = userCredential.user;
-    console.log(user);
-    const docRef = await setDoc(doc(db, "users", user.uid), {
+
+    await setDoc(doc(db, "users", user.uid), {
       displayName,
       email,
     });
@@ -40,5 +42,27 @@ export const signInUser = async (email, password) => {
   } catch (err) {
     console.log("SIGN IN ERROR: ", err.message);
     return { error: err.message };
+  }
+};
+
+export const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    console.log("GOOGLE SIGN IN USER: ", user);
+    //check if a user currently exists
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      // if sign in is from a new user create a new doc in users collection
+      await setDoc(doc(db, "users", user.uid), {
+        displayName: user.displayName,
+        email: user.email,
+      });
+    }
+    return user.uid;
+  } catch (err) {
+    console.log("GOOGLE SIGN IN ERROR: ", err.message);
   }
 };
