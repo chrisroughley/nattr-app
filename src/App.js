@@ -44,7 +44,8 @@ function App() {
             <LoginPage />
           </Route>
           <Route exact path="/account">
-            <AccountManagementPage />
+            {isLogged ? <AccountManagementPage /> : <Redirect to="/" />}
+            {/* <AccountManagementPage /> */}
           </Route>
           <Route exact path="/messenger">
             {isLogged ? <MessengerPage /> : <Redirect to="/" />}
