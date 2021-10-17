@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 
-import { signInUser, signInWithGoogle } from "../../utils/firebaseUtils";
+import {
+  signInUser,
+  signInWithFaceBook,
+  signInWithGoogle,
+} from "../../utils/firebaseUtils";
 
 import { useDispatch } from "react-redux";
-import { getUserById } from "../../state/slices/userSlice";
+import { getUserById, setIsLogged } from "../../state/slices/userSlice";
 
 const SignInForm = () => {
   const history = useHistory();
@@ -26,10 +30,39 @@ const SignInForm = () => {
     console.log("SIGN IN FORM ERROR: ", error);
   };
 
+  const handleSocialSignIn = async (socialProvider) => {
+    let userId = "";
+    switch (socialProvider) {
+      case "google":
+        userId = await signInWithGoogle();
+        break;
+      case "facebook":
+        userId = await signInWithFaceBook();
+        break;
+    }
+    if (userId) {
+      dispatch(getUserById(userId));
+      dispatch(setIsLogged(true));
+      history.push("/messenger");
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     const userId = await signInWithGoogle();
-    dispatch(getUserById(userId));
-    history.push("/messenger");
+    if (userId) {
+      dispatch(getUserById(userId));
+      dispatch(setIsLogged(true));
+      history.push("/messenger");
+    }
+  };
+
+  const handleFacebookSignIn = async () => {
+    const userId = await signInWithFaceBook();
+    if (userId) {
+      dispatch(getUserById(userId));
+      dispatch(setIsLogged(true));
+      history.push("/messenger");
+    }
   };
 
   const registerOptions = {
@@ -57,7 +90,20 @@ const SignInForm = () => {
         </label>
         <input type="submit" value="submit" />
       </form>
-      <button onClick={handleGoogleSignIn}>sign in with google</button>
+      <button
+        onClick={() => {
+          handleSocialSignIn("google");
+        }}
+      >
+        sign in with google
+      </button>
+      <button
+        onClick={() => {
+          handleSocialSignIn("facebook");
+        }}
+      >
+        sign in with facebook
+      </button>
     </div>
   );
 };
