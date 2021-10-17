@@ -3,8 +3,9 @@ import { useHistory } from "react-router";
 
 import {
   signInUser,
-  signInWithFaceBook,
+  signInWithFacebook,
   signInWithGoogle,
+  signInWithSocial,
 } from "../../utils/firebaseUtils";
 
 import { useDispatch } from "react-redux";
@@ -30,34 +31,8 @@ const SignInForm = () => {
     console.log("SIGN IN FORM ERROR: ", error);
   };
 
-  const handleSocialSignIn = async (socialProvider) => {
-    let userId = "";
-    switch (socialProvider) {
-      case "google":
-        userId = await signInWithGoogle();
-        break;
-      case "facebook":
-        userId = await signInWithFaceBook();
-        break;
-    }
-    if (userId) {
-      dispatch(getUserById(userId));
-      dispatch(setIsLogged(true));
-      history.push("/messenger");
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    const userId = await signInWithGoogle();
-    if (userId) {
-      dispatch(getUserById(userId));
-      dispatch(setIsLogged(true));
-      history.push("/messenger");
-    }
-  };
-
-  const handleFacebookSignIn = async () => {
-    const userId = await signInWithFaceBook();
+  const handleSocialSignIn = async (authProvider) => {
+    const userId = await signInWithSocial(authProvider);
     if (userId) {
       dispatch(getUserById(userId));
       dispatch(setIsLogged(true));
@@ -73,6 +48,7 @@ const SignInForm = () => {
       required: "missing password",
     },
   };
+
   return (
     <div>
       <h1>Sign In</h1>
