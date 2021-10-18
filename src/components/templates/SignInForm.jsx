@@ -2,9 +2,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 
 import {
-  signInUser,
-  signInWithFacebook,
-  signInWithGoogle,
+  signInUserWithEmail,
   signInWithSocial,
 } from "../../utils/firebaseUtils";
 
@@ -18,7 +16,7 @@ const SignInForm = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const userId = await signInUser(data.email, data.password);
+    const userId = await signInUserWithEmail(data.email, data.password);
     if (!userId.error) {
       dispatch(getUserById(userId));
       setValue("email", "", { shouldValidate: true });
@@ -34,9 +32,9 @@ const SignInForm = () => {
   const handleSocialSignIn = async (authProvider) => {
     const userId = await signInWithSocial(authProvider);
     if (userId) {
+      history.push("/messenger");
       dispatch(getUserById(userId));
       dispatch(setIsLogged(true));
-      history.push("/messenger");
     }
   };
 

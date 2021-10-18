@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { setIsLogged, clearUser } from "../../state/slices/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -9,6 +9,7 @@ import DevComponent from "../DevComponent";
 
 const MessengerPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const openVideoChat = () => {
     window.open(
@@ -23,6 +24,7 @@ const MessengerPage = () => {
       await signOut(auth);
       dispatch(setIsLogged(false));
       dispatch(clearUser());
+      history.push("/");
     } catch (err) {
       console.log(err.message);
     }
@@ -33,9 +35,7 @@ const MessengerPage = () => {
       <h1>Messenger Page</h1>
       <button onClick={openVideoChat}>Video</button>
       <Link to="/account">Account Managemnet</Link>
-      <Link onClick={handleSignOut} to="/">
-        Sign Out
-      </Link>
+      <button onClick={handleSignOut}>Sign Out</button>
       <DevComponent></DevComponent>
     </div>
   );

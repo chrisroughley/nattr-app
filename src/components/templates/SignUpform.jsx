@@ -7,7 +7,7 @@ import { getUserById } from "../../state/slices/userSlice";
 
 import zxcvbn from "zxcvbn";
 
-import { createUser } from "../../utils/firebaseUtils";
+import { createUserWithEmail } from "../../utils/firebaseUtils";
 
 const SignUpForm = () => {
   const history = useHistory();
@@ -21,7 +21,7 @@ const SignUpForm = () => {
 
   const onSubmit = async (data) => {
     if (data.password === data.confirmationPassword) {
-      const userId = await createUser(
+      const userId = await createUserWithEmail(
         data.displayName,
         data.email,
         data.password

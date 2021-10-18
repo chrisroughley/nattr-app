@@ -8,6 +8,9 @@
 # firebase config
 /src/utils/firebase.js
 
+# algolia initialization
+/src/utils/algolia.js
+
 # testing
 /coverage
 

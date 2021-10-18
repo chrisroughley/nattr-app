@@ -9,7 +9,7 @@ import {
 import { auth, db } from "./firebase";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
 
-export const createUser = async (displayName, email, password) => {
+export const createUserWithEmail = async (displayName, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -30,7 +30,7 @@ export const createUser = async (displayName, email, password) => {
   }
 };
 
-export const signInUser = async (email, password) => {
+export const signInUserWithEmail = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
