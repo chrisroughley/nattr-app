@@ -21,6 +21,9 @@ export const createUserWithEmail = async (displayName, email, password) => {
     await setDoc(doc(db, "users", user.uid), {
       displayName,
       email,
+      friends: [],
+      pendingFriendRequests: [],
+      chats: [],
     });
     return user.uid;
   } catch (err) {
@@ -68,6 +71,9 @@ export const signInWithSocial = async (authProvider) => {
       await setDoc(doc(db, "users", user.uid), {
         displayName: user.displayName,
         email: user.email,
+        friends: [],
+        pendingFriendRequests: [],
+        chats: [],
       });
     }
     return user.uid;

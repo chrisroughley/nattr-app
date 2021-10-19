@@ -6,6 +6,7 @@ import { auth } from "../../utils/firebase";
 import { signOut } from "@firebase/auth";
 
 import DevComponent from "../DevComponent";
+import SideBar from "../templates/SideBar";
 
 const MessengerPage = () => {
   const dispatch = useDispatch();
@@ -34,8 +35,9 @@ const MessengerPage = () => {
     <div>
       <h1>Messenger Page</h1>
       <button onClick={openVideoChat}>Video</button>
-      <Link to="/account">Account Managemnet</Link>
+      <Link to="/account">Account Management</Link>
       <button onClick={handleSignOut}>Sign Out</button>
+      <SideBar></SideBar>
       <DevComponent></DevComponent>
     </div>
   );

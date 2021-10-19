@@ -10,7 +10,7 @@ export const getUserById = createAsyncThunk(
     try {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        return docSnap.data();
+        return { userId, ...docSnap.data() };
       } else {
         return thunkAPI.rejectWithValue("no user");
       }
