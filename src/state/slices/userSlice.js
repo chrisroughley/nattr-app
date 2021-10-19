@@ -26,11 +26,15 @@ export const userSlice = createSlice({
     loading: "idle",
     user: {},
     isLogged: false,
+    isInitialized: false,
     error: { message: "" },
   },
   reducers: {
     setIsLogged: (state, action) => {
       state.isLogged = action.payload;
+    },
+    setIsInitialized: (state, action) => {
+      state.isInitialized = action.payload;
     },
     clearUser: (state, action) => {
       state.user = {};
@@ -45,6 +49,7 @@ export const userSlice = createSlice({
     builder.addCase(getUserById.fulfilled, (state, action) => {
       if (state.loading === "pending") {
         state.loading = "idle";
+        state.isInitialized = true;
         state.user = action.payload;
       }
     });
@@ -52,11 +57,12 @@ export const userSlice = createSlice({
       if (state.loading === "pending") {
         console.log(action.payload);
         state.loading = "idle";
+        state.isInitialized = true;
         state.error.message = action.payload;
       }
     });
   },
 });
 
-export const { setIsLogged, clearUser } = userSlice.actions;
+export const { setIsLogged, setIsInitialized, clearUser } = userSlice.actions;
 export default userSlice.reducer;

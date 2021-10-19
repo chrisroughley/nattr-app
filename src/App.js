@@ -15,20 +15,25 @@ import VideoChatPage from "./components/pages/VideoChatPage";
 import BadURLPage from "./components/pages/BadURLPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById, setIsLogged } from "./state/slices/userSlice";
+import {
+  getUserById,
+  setIsLogged,
+  setIsInitialized,
+} from "./state/slices/userSlice";
 
 function App() {
   const dispatch = useDispatch();
   const isLogged = useSelector((state) => state.user.isLogged);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitialized = useSelector((state) => state.user.isInitialized);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setIsLogged(true));
         dispatch(getUserById(user.uid));
+      } else {
+        dispatch(setIsInitialized(true));
       }
-      setIsInitialized(true);
     });
   }, [dispatch]);
 
