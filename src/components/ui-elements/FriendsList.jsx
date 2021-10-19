@@ -16,10 +16,13 @@ const FriendsList = () => {
     "friendsList"
   );
 
-  useEffect(async () => {
-    const querySnapshot = await getDocs(friendsListRef);
-    setFriendsList(querySnapshot.docs);
-    console.log("QUERY SNAPSHOT: ", querySnapshot.docs);
+  useEffect(() => {
+    const getFriendsList = async () => {
+      const querySnapshot = await getDocs(friendsListRef);
+      setFriendsList(querySnapshot.docs);
+      console.log("QUERY SNAPSHOT: ", querySnapshot.docs);
+    };
+    getFriendsList();
   }, []);
 
   return (
@@ -27,7 +30,9 @@ const FriendsList = () => {
       <h1>Friends List</h1>
       <ul>
         {friendsList.map((friend) => {
-          return <li>{friend.data().displayName}</li>;
+          return (
+            <li key={friend.data().userId}>{friend.data().displayName}</li>
+          );
         })}
       </ul>
     </div>

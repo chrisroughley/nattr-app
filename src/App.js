@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -53,8 +53,8 @@ function App() {
             <AccountManagementPage />
           </Route>
           <Route exact path="/messenger">
-            {/* {isLogged ? <MessengerPage /> : <Redirect to="/" />} */}
-            <MessengerPage />
+            {isLogged ? <MessengerPage /> : <Redirect to="/" />}
+            {/* <MessengerPage /> */}
           </Route>
           <Route exact path="/video">
             <VideoChatPage />

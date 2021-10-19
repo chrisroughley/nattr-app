@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { auth, db } from "../utils/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
 
-import { index } from "../utils/algolia";
 import { deleteDoc, doc, serverTimestamp, setDoc } from "@firebase/firestore";
 
 const DevComponent = () => {
@@ -20,10 +19,6 @@ const DevComponent = () => {
         console.log("no user signed in");
       }
     });
-  };
-  const searchTest = async () => {
-    const hits = await index.search("test");
-    console.log(hits);
   };
 
   const createCollectionTest = async () => {

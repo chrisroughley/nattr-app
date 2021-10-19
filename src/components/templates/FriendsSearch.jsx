@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const FriendsSearch = () => {
   const user = useSelector((state) => state.user.user);
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit } = useForm();
   const [searchResults, setSearchResults] = useState([]);
 
   const onSubmit = async (data) => {
@@ -61,9 +61,9 @@ const FriendsSearch = () => {
         <input type="submit" value="search" />
       </form>
       <li>
-        {searchResults.map((result) => {
-          if (user.userId === result.objectID) return;
-          return (
+        {searchResults.flatMap((result) => {
+          if (user.userId === result.objectID) return [];
+          return [
             <ul key={result.objectID}>
               <p>display name: {result.displayName}</p>
               <button
@@ -73,8 +73,8 @@ const FriendsSearch = () => {
               >
                 add friend
               </button>
-            </ul>
-          );
+            </ul>,
+          ];
         })}
       </li>
     </div>
