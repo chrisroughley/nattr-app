@@ -9,14 +9,8 @@ const FriendsList = () => {
   const user = useSelector((state) => state.user.user);
   const [friendsList, setFriendsList] = useState([]);
 
-  const friendsListRef = collection(
-    db,
-    "users",
-    user.userId || "pending",
-    "friendsList"
-  );
-
   useEffect(() => {
+    const friendsListRef = collection(db, "users", user.userId, "friendsList");
     const getFriendsList = async () => {
       const querySnapshot = await getDocs(friendsListRef);
       setFriendsList(querySnapshot.docs);

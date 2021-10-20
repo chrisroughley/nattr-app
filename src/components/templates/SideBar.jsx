@@ -15,22 +15,20 @@ const SideBar = () => {
   const [friendRequests, setFriendRequests] = useState([]);
   const user = useSelector((state) => state.user.user);
 
-  const friendRequestRef = collection(
-    db,
-    "users",
-    user.userId || "pending",
-    "pendingFriendRequests"
-  );
-
   //get friend request data on component mount and listen for changes on the pendingFriendRequests collections
-  useEffect(
-    () =>
-      onSnapshot(friendRequestRef, (snapshot) => {
-        setFriendRequests(snapshot.docs);
-        console.log("FRIEND REQUESTS: ", snapshot.docs);
-      }),
-    []
-  );
+  useEffect(() => {
+    const friendRequestRef = collection(
+      db,
+      "users",
+      user.userId,
+      "pendingFriendRequests"
+    );
+    const unSub = onSnapshot(friendRequestRef, (snapshot) => {
+      setFriendRequests(snapshot.docs);
+      console.log("FRIEND REQUESTS: ", snapshot.docs);
+    });
+    return unSub;
+  }, []);
 
   const handleAcceptRequest = async (userId, displayName) => {
     const requestReceiverFriendsListRef = doc(
