@@ -7,7 +7,7 @@ import {
 } from "../../utils/firebaseUtils";
 
 import { useDispatch } from "react-redux";
-import { getUserById, setIsLogged } from "../../state/slices/userSlice";
+import { getUserById } from "../../state/slices/userSlice";
 
 const SignInForm = () => {
   const history = useHistory();
@@ -18,10 +18,11 @@ const SignInForm = () => {
     console.log(data);
     const userId = await signInUserWithEmail(data.email, data.password);
     if (!userId.error) {
+      history.push("/messenger");
       dispatch(getUserById(userId));
+
       setValue("email", "", { shouldValidate: true });
       setValue("password", "", { shouldValidate: true });
-      history.push("/messenger");
     }
   };
 
@@ -34,7 +35,6 @@ const SignInForm = () => {
     if (userId) {
       history.push("/messenger");
       dispatch(getUserById(userId));
-      dispatch(setIsLogged(true));
     }
   };
 

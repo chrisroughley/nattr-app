@@ -37,7 +37,11 @@ export const userSlice = createSlice({
       state.isInitialized = action.payload;
     },
     clearUser: (state, action) => {
-      state.user = {};
+      state.user = {
+        userId: "no user",
+        email: "no user",
+        displayName: "no user",
+      };
     },
   },
   extraReducers: (builder) => {
@@ -50,6 +54,7 @@ export const userSlice = createSlice({
       if (state.loading === "pending") {
         state.loading = "idle";
         state.isInitialized = true;
+        state.isLogged = true;
         state.user = action.payload;
       }
     });
@@ -58,6 +63,7 @@ export const userSlice = createSlice({
         console.log(action.payload);
         state.loading = "idle";
         state.isInitialized = true;
+        state.isLogged = false;
         state.error.message = action.payload;
       }
     });

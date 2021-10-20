@@ -28,7 +28,7 @@ const SideBar = () => {
       console.log("FRIEND REQUESTS: ", snapshot.docs);
     });
     return unSub;
-  }, []);
+  }, [user.userId]);
 
   const handleAcceptRequest = async (userId, displayName) => {
     const requestReceiverFriendsListRef = doc(
@@ -46,7 +46,7 @@ const SideBar = () => {
       user.userId
     );
 
-    //set document in friends list collection to opposing users
+    //set document in friends list collection to opposing users data and visa-versa
     await setDoc(
       requestReceiverFriendsListRef,
       {
@@ -78,6 +78,19 @@ const SideBar = () => {
     await deleteDoc(pendingFriendRequestRef);
   };
 
+  const handleRejectRequest = async (userId) => {
+    const pendingFriendRequestRef = doc(
+      db,
+      "users",
+      user.userId,
+      "pendingFriendRequests",
+      userId
+    );
+
+    //remove the pending friend request document
+    await deleteDoc(pendingFriendRequestRef);
+  };
+
   return (
     <div>
       <h1>Side Bar</h1>
@@ -97,6 +110,13 @@ const SideBar = () => {
                 }}
               >
                 accept request
+              </button>
+              <button
+                onClick={() => {
+                  handleRejectRequest(friendRequestData.userId);
+                }}
+              >
+                decline request
               </button>
             </li>
           );

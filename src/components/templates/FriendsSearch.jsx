@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const FriendsSearch = () => {
   const user = useSelector((state) => state.user.user);
+  const friends = useSelector((state) => state.friends.friends);
   const { register, handleSubmit } = useForm();
   const [searchResults, setSearchResults] = useState([]);
 
@@ -44,6 +45,7 @@ const FriendsSearch = () => {
       { merge: true }
     );
   };
+
   const registerOptions = {
     friendSearch: { required: "missing friend search" },
   };
@@ -66,13 +68,18 @@ const FriendsSearch = () => {
           return [
             <ul key={result.objectID}>
               <p>display name: {result.displayName}</p>
-              <button
-                onClick={() => {
-                  handleAddFriend(result.objectID);
-                }}
-              >
-                add friend
-              </button>
+              {/* check if user is already in the friend list collection to prevent sending request to an existing friend */}
+              {friends.every((friend) => friend.userId !== result.objectID) ? (
+                <button
+                  onClick={() => {
+                    handleAddFriend(result.objectID);
+                  }}
+                >
+                  add friend
+                </button>
+              ) : (
+                <p>friend</p>
+              )}
             </ul>,
           ];
         })}

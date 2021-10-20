@@ -1,32 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { db } from "../../utils/firebase";
-import { collection, getDocs } from "@firebase/firestore";
-
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getFriendsByUserId } from "../../state/slices/friendsSlice";
 
 const FriendsList = () => {
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user.user);
-  const [friendsList, setFriendsList] = useState([]);
+  const friends = useSelector((state) => state.friends.friends);
 
   useEffect(() => {
-    const friendsListRef = collection(db, "users", user.userId, "friendsList");
-    const getFriendsList = async () => {
-      const querySnapshot = await getDocs(friendsListRef);
-      setFriendsList(querySnapshot.docs);
-      console.log("QUERY SNAPSHOT: ", querySnapshot.docs);
-    };
-    getFriendsList();
-  }, []);
+    dispatch(getFriendsByUserId(user.userId));
+  }, [user.userId]);
 
   return (
     <div>
       <h1>Friends List</h1>
       <ul>
-        {friendsList.map((friend) => {
-          return (
-            <li key={friend.data().userId}>{friend.data().displayName}</li>
-          );
+        {friends.map((friend) => {
+          return <li key={friend.userId}>{friend.displayName}</li>;
         })}
       </ul>
     </div>
