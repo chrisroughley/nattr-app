@@ -18,6 +18,7 @@ const FriendsList = () => {
       <h1>Friends List</h1>
       <ul>
         {friends.map((friend) => {
+          console.log(friend);
           return <li key={friend.userId}>{friend.displayName}</li>;
         })}
       </ul>

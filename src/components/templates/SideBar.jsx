@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import {
-  onSnapshot,
-  collection,
-  deleteDoc,
-  doc,
-  setDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import {
+  acceptFriendRequest,
+  rejectFriendRequest,
+} from "../../utils/firebaseUtils";
 
 const SideBar = () => {
   const [friendRequests, setFriendRequests] = useState([]);
@@ -30,65 +27,12 @@ const SideBar = () => {
     return unSub;
   }, [user.userId]);
 
-  const handleAcceptRequest = async (userId, displayName) => {
-    const requestReceiverFriendsListRef = doc(
-      db,
-      "users",
-      user.userId,
-      "friendsList",
-      userId
-    );
-    const requestSenderFriendsListRef = doc(
-      db,
-      "users",
-      userId,
-      "friendsList",
-      user.userId
-    );
-
-    //set document in friends list collection to opposing users data and visa-versa
-    await setDoc(
-      requestReceiverFriendsListRef,
-      {
-        userId,
-        displayName,
-        requestDate: serverTimestamp(),
-      },
-      { merge: true }
-    );
-    await setDoc(
-      requestSenderFriendsListRef,
-      {
-        userId: user.userId,
-        displayName: user.displayName,
-        requestDate: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    const pendingFriendRequestRef = doc(
-      db,
-      "users",
-      user.userId,
-      "pendingFriendRequests",
-      userId
-    );
-
-    //remove the pending friend request document
-    await deleteDoc(pendingFriendRequestRef);
+  const handleAcceptRequest = (userId, displayName) => {
+    acceptFriendRequest(user.userId, userId, user.displayName, displayName);
   };
 
-  const handleRejectRequest = async (userId) => {
-    const pendingFriendRequestRef = doc(
-      db,
-      "users",
-      user.userId,
-      "pendingFriendRequests",
-      userId
-    );
-
-    //remove the pending friend request document
-    await deleteDoc(pendingFriendRequestRef);
+  const handleRejectRequest = (userId) => {
+    rejectFriendRequest(user.userId, userId);
   };
 
   return (

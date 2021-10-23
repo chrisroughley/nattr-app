@@ -3,8 +3,7 @@ import { index } from "../../utils/algolia";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-import { db } from "../../utils/firebase";
-import { setDoc, doc, serverTimestamp } from "@firebase/firestore";
+import { sendFriendRequest } from "../../utils/firebaseUtils";
 
 import { useSelector } from "react-redux";
 
@@ -27,23 +26,8 @@ const FriendsSearch = () => {
     console.log("ERROR: ", error);
   };
 
-  const handleAddFriend = async (userId) => {
-    const pendingFriendRequestRef = doc(
-      db,
-      "users",
-      userId,
-      "pendingFriendRequests",
-      user.userId
-    );
-    await setDoc(
-      pendingFriendRequestRef,
-      {
-        userId: user.userId,
-        displayName: user.displayName,
-        requestDate: serverTimestamp(),
-      },
-      { merge: true }
-    );
+  const handleAddFriend = (userId) => {
+    sendFriendRequest(user.userId, userId, user.displayName);
   };
 
   const registerOptions = {

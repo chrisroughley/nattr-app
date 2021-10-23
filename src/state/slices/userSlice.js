@@ -24,7 +24,11 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: "idle",
-    user: {},
+    user: {
+      userId: "no user",
+      email: "no user",
+      displayName: "no user",
+    },
     isLogged: false,
     isInitialized: false,
     error: { message: "" },

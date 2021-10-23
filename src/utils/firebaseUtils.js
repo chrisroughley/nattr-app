@@ -6,6 +6,8 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 
+import { deleteDoc, serverTimestamp } from "@firebase/firestore";
+
 import { auth, db } from "./firebase";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
 
@@ -74,4 +76,93 @@ export const signInWithSocial = async (authProvider) => {
   } catch (err) {
     console.log(`${authProvider.toUpperCase()} SIGN IN ERROR: `, err.message);
   }
+};
+
+export const acceptFriendRequest = async (
+  recipientUserId,
+  requesterUserId,
+  recipientDisplayName,
+  requesterDisplayName
+) => {
+  const recipientFriendsListRef = doc(
+    db,
+    "users",
+    recipientUserId,
+    "friendsList",
+    requesterUserId
+  );
+  const requesterFriendsListRef = doc(
+    db,
+    "users",
+    requesterUserId,
+    "friendsList",
+    recipientUserId
+  );
+
+  //set document in friends list collection to opposite users data and visa-versa
+  await setDoc(
+    recipientFriendsListRef,
+    {
+      userId: requesterUserId,
+      displayName: requesterDisplayName,
+      requestDate: serverTimestamp(),
+    },
+    { merge: true }
+  );
+  await setDoc(
+    requesterFriendsListRef,
+    {
+      userId: recipientUserId,
+      displayName: recipientDisplayName,
+      requestDate: serverTimestamp(),
+    },
+    { merge: true }
+  );
+
+  const pendingFriendRequestRef = doc(
+    db,
+    "users",
+    recipientUserId,
+    "pendingFriendRequests",
+    requesterUserId
+  );
+
+  //remove the pending friend request document
+  await deleteDoc(pendingFriendRequestRef);
+};
+
+export const rejectFriendRequest = async (recipientUserId, requesterUserId) => {
+  const pendingFriendRequestRef = doc(
+    db,
+    "users",
+    recipientUserId,
+    "pendingFriendRequests",
+    requesterUserId
+  );
+
+  //remove the pending friend request document
+  await deleteDoc(pendingFriendRequestRef);
+};
+
+export const sendFriendRequest = async (
+  currentUserId,
+  targetUserId,
+  currentUserDisplayName
+) => {
+  const pendingFriendRequestRef = doc(
+    db,
+    "users",
+    targetUserId,
+    "pendingFriendRequests",
+    currentUserId
+  );
+  await setDoc(
+    pendingFriendRequestRef,
+    {
+      userId: currentUserId,
+      displayName: currentUserDisplayName,
+      requestDate: serverTimestamp(),
+    },
+    { merge: true }
+  );
 };
