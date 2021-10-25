@@ -30,7 +30,7 @@ export const getFriendsByUserId = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
+export const friendsSlice = createSlice({
   name: "friends",
   initialState: {
     loading: "idle",
@@ -60,4 +60,4 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default friendsSlice.reducer;

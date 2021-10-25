@@ -15,6 +15,7 @@ const SideBar = () => {
 
   //get friend request data on component mount and listen for changes on the pendingFriendRequests collections
   useEffect(() => {
+    if (!user.userId) return;
     const friendRequestRef = collection(
       db,
       "users",

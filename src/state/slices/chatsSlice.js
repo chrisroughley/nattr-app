@@ -14,9 +14,7 @@ export const getChatsByUserId = createAsyncThunk(
         const chatsListData = chatsList.map((chat) => {
           const chatData = chat.data();
           return {
-            userId: chatData.userId,
-            displayName: chatData.displayName,
-            requestDate: chatData.requestDate.toString(),
+            chatId: chatData.chatId,
           };
         });
         console.log("CHATS LIST DATA: ", chatsListData);
@@ -30,27 +28,27 @@ export const getChatsByUserId = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
-  name: "friends",
+export const chatsSlice = createSlice({
+  name: "chats",
   initialState: {
     loading: "idle",
-    friends: [],
+    chats: [],
     error: { message: "" },
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getFriendsByUserId.pending, (state, action) => {
+    builder.addCase(getChatsByUserId.pending, (state, action) => {
       if (state.loading === "idle") {
         state.loading = "pending";
       }
     });
-    builder.addCase(getFriendsByUserId.fulfilled, (state, action) => {
+    builder.addCase(getChatsByUserId.fulfilled, (state, action) => {
       if (state.loading === "pending") {
         state.loading = "idle";
-        state.friends = action.payload;
+        state.chats = action.payload;
       }
     });
-    builder.addCase(getFriendsByUserId.rejected, (state, action) => {
+    builder.addCase(getChatsByUserId.rejected, (state, action) => {
       if (state.loading === "pending") {
         console.log(action.payload);
         state.loading = "idle";
@@ -60,4 +58,4 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default chatsSlice.reducer;

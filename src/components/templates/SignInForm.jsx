@@ -18,11 +18,10 @@ const SignInForm = () => {
     console.log(data);
     const userId = await signInUserWithEmail(data.email, data.password);
     if (!userId.error) {
-      history.push("/messenger");
-      dispatch(getUserById(userId));
-
       setValue("email", "", { shouldValidate: true });
       setValue("password", "", { shouldValidate: true });
+      dispatch(getUserById(userId));
+      history.push("/messenger");
     }
   };
 
@@ -32,9 +31,9 @@ const SignInForm = () => {
 
   const handleSocialSignIn = async (authProvider) => {
     const userId = await signInWithSocial(authProvider);
-    if (userId) {
-      history.push("/messenger");
+    if (!userId.error) {
       dispatch(getUserById(userId));
+      history.push("/messenger");
     }
   };
 

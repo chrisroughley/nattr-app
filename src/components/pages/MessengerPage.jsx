@@ -9,7 +9,10 @@ import DevComponent from "../DevComponent";
 import SideBar from "../templates/SideBar";
 import FriendsSearch from "../templates/FriendsSearch";
 import FriendsList from "../templates/FriendsList";
-import Chats from "../templates/Chats";
+import ChatsList from "../templates/ChatsList";
+import ChatPanel from "../templates/ChatPanel";
+
+import "../../styles/Dev.css";
 
 const MessengerPage = () => {
   const dispatch = useDispatch();
@@ -40,10 +43,19 @@ const MessengerPage = () => {
       <button onClick={openVideoChat}>Video</button>
       <Link to="/account">Account Management</Link>
       <button onClick={handleSignOut}>Sign Out</button>
-      <SideBar></SideBar>
-      <FriendsSearch></FriendsSearch>
-      <FriendsList></FriendsList>
-      <Chats></Chats>
+      <div className={"dev-layout"}>
+        <div>
+          <SideBar></SideBar>
+        </div>
+        <div>
+          <FriendsSearch></FriendsSearch>
+          <FriendsList></FriendsList>
+          <ChatsList></ChatsList>
+        </div>
+        <div>
+          <ChatPanel></ChatPanel>
+        </div>
+      </div>
       <DevComponent></DevComponent>
     </div>
   );

@@ -80,6 +80,7 @@ export const signInWithSocial = async (authProvider) => {
     return user.uid;
   } catch (err) {
     console.log(`${authProvider.toUpperCase()} SIGN IN ERROR: `, err.message);
+    return { error: err.message };
   }
 };
 
