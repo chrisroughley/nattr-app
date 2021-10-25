@@ -8,7 +8,8 @@ import { signOut } from "@firebase/auth";
 import DevComponent from "../DevComponent";
 import SideBar from "../templates/SideBar";
 import FriendsSearch from "../templates/FriendsSearch";
-import FriendsList from "../ui-elements/FriendsList";
+import FriendsList from "../templates/FriendsList";
+import Chats from "../templates/Chats";
 
 const MessengerPage = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const MessengerPage = () => {
       <SideBar></SideBar>
       <FriendsSearch></FriendsSearch>
       <FriendsList></FriendsList>
+      <Chats></Chats>
       <DevComponent></DevComponent>
     </div>
   );

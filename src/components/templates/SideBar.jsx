@@ -6,6 +6,7 @@ import { db } from "../../utils/firebase";
 import {
   acceptFriendRequest,
   rejectFriendRequest,
+  initializeChat,
 } from "../../utils/firebaseUtils";
 
 const SideBar = () => {
@@ -27,8 +28,14 @@ const SideBar = () => {
     return unSub;
   }, [user.userId]);
 
-  const handleAcceptRequest = (userId, displayName) => {
-    acceptFriendRequest(user.userId, userId, user.displayName, displayName);
+  const handleAcceptRequest = async (userId, displayName) => {
+    await acceptFriendRequest(
+      user.userId,
+      userId,
+      user.displayName,
+      displayName
+    );
+    await initializeChat([{ userId }, { userId: user.userId }], "friend");
   };
 
   const handleRejectRequest = (userId) => {

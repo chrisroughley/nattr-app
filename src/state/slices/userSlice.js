@@ -24,11 +24,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: "idle",
-    user: {
-      userId: "no user",
-      email: "no user",
-      displayName: "no user",
-    },
+    user: {},
     isLogged: false,
     isInitialized: false,
     error: { message: "" },
@@ -41,11 +37,7 @@ export const userSlice = createSlice({
       state.isInitialized = action.payload;
     },
     clearUser: (state, action) => {
-      state.user = {
-        userId: "no user",
-        email: "no user",
-        displayName: "no user",
-      };
+      state.user = {};
     },
   },
   extraReducers: (builder) => {

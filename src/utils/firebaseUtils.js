@@ -6,7 +6,12 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 
-import { deleteDoc, serverTimestamp } from "@firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  serverTimestamp,
+} from "@firebase/firestore";
 
 import { auth, db } from "./firebase";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
@@ -165,4 +170,46 @@ export const sendFriendRequest = async (
     },
     { merge: true }
   );
+};
+
+export const initializeChat = async (members, chatType) => {
+  try {
+    const chatsRef = collection(db, "chats");
+    const docRef = await addDoc(chatsRef, { chatType });
+    members.forEach(async (member) => {
+      //create a new chat document with a members collection
+      const membersRef = doc(db, "chats", docRef.id, "members", member.userId);
+      await setDoc(membersRef, { userId: member.userId });
+      //add the new chat id to the all members chats list's
+      const chatsListRef = doc(
+        db,
+        "users",
+        member.userId,
+        "chatsList",
+        docRef.id
+      );
+      await setDoc(chatsListRef, { chatId: docRef.id });
+    });
+    //if chat is just between two friends adds the chat id to the friend document on each users chats list collection
+    if (chatType === "friend") {
+      const userOneFriendRef = doc(
+        db,
+        "users",
+        members[0].userId,
+        "friendsList",
+        members[1].userId
+      );
+      const userTwoFriendRef = doc(
+        db,
+        "users",
+        members[1].userId,
+        "friendsList",
+        members[0].userId
+      );
+      await setDoc(userOneFriendRef, { chatId: docRef.id }, { merge: true });
+      await setDoc(userTwoFriendRef, { chatId: docRef.id }, { merge: true });
+    }
+  } catch (err) {
+    console.log("ERROR MESSAGE: ", err.message);
+  }
 };

@@ -26,8 +26,8 @@ const FriendsSearch = () => {
     console.log("ERROR: ", error);
   };
 
-  const handleAddFriend = (userId) => {
-    sendFriendRequest(user.userId, userId, user.displayName);
+  const handleAddFriend = async (userId) => {
+    await sendFriendRequest(user.userId, userId, user.displayName);
   };
 
   const registerOptions = {
