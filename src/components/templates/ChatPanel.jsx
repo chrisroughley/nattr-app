@@ -9,6 +9,8 @@ import { sendMessage } from "../../utils/firebaseUtils";
 
 import { useForm } from "react-hook-form";
 
+import "../../styles/chatPanelStyles.css";
+
 const ChatPanel = () => {
   const dispatch = useDispatch();
   const chatId = useSelector((state) => state.currentChat.currentChatId);
@@ -46,21 +48,24 @@ const ChatPanel = () => {
           {messages.map((message) => {
             const messageData = message.data();
             return (
-              <li>
+              <li key={messageData.messageDate}>
                 <h4>{messageData.displayName}</h4>
                 <p>{messageData.message}</p>
               </li>
             );
           })}
         </ul>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <form
+          className={"message-box"}
+          onSubmit={handleSubmit(onSubmit, onError)}
+        >
           <label>
             send message
             <input
               type="text"
               {...register("message", registerOptions.message)}
             />
-            <input type="submit" />
+            <input type="submit" value="send" />
           </label>
         </form>
       </div>

@@ -1,0 +1,5 @@
+.message-box {
+  position: absolute;
+  bottom: 10px;
+  left: calc(30vw + 10px);
+}

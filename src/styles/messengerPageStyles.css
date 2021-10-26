@@ -1,0 +1,29 @@
+.layout {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.side-bar-panel {
+  max-width: 10vw;
+  min-width: 10vw;
+  max-height: 100vh;
+  min-height: 100vh;
+  background-color: teal;
+}
+
+.social-lists-panel {
+  max-width: 20vw;
+  min-width: 20vw;
+  max-height: 100vh;
+  min-height: 100vh;
+  background-color: tan;
+}
+
+.chat-panel {
+  max-width: 70vw;
+  min-width: 70vw;
+  max-height: 100vh;
+  min-height: 100vh;
+  background-color: slategray;
+}

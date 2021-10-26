@@ -1,6 +1,8 @@
 import { Link, useHistory } from "react-router-dom";
+
 import { setIsLogged, clearUser } from "../../state/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { setSelectedPanel } from "../../state/slices/listPanelSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 import { auth } from "../../utils/firebase";
 import { signOut } from "@firebase/auth";
@@ -12,9 +14,10 @@ import FriendsList from "../templates/FriendsList";
 import ChatsList from "../templates/ChatsList";
 import ChatPanel from "../templates/ChatPanel";
 
-import "../../styles/Dev.css";
+import "../../styles/messengerPageStyles.css";
 
 const MessengerPage = () => {
+  const listPanel = useSelector((state) => state.listPanel.selectedPanel);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -39,20 +42,25 @@ const MessengerPage = () => {
 
   return (
     <div>
-      <h1>Messenger Page</h1>
-      <button onClick={openVideoChat}>Video</button>
-      <Link to="/account">Account Management</Link>
-      <button onClick={handleSignOut}>Sign Out</button>
-      <div className={"dev-layout"}>
-        <div>
+      <div className={"layout"}>
+        <div className={"side-bar-panel"}>
+          <h1>Messenger Page</h1>
+          <button onClick={openVideoChat}>Video</button>
+          <Link to="/account">Account Management</Link>
+          <button onClick={handleSignOut}>Sign Out</button>
           <SideBar></SideBar>
         </div>
-        <div>
-          <FriendsSearch></FriendsSearch>
-          <FriendsList></FriendsList>
-          <ChatsList></ChatsList>
+        <div className={"social-lists-panel"}>
+          {listPanel === "chatsList" ? (
+            <ChatsList></ChatsList>
+          ) : (
+            <div>
+              <FriendsSearch></FriendsSearch>
+              <FriendsList></FriendsList>
+            </div>
+          )}
         </div>
-        <div>
+        <div className={"chat-panel"}>
           <ChatPanel></ChatPanel>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
@@ -9,7 +10,10 @@ import {
   initializeChat,
 } from "../../utils/firebaseUtils";
 
+import "../../styles/sideBarStyles.css";
+
 const SideBar = () => {
+  const dispatch = useDispatch();
   const [friendRequests, setFriendRequests] = useState([]);
   const user = useSelector((state) => state.user.user);
 
@@ -46,10 +50,28 @@ const SideBar = () => {
     rejectFriendRequest(user.userId, userId);
   };
 
+  const handleSetPanel = (listPanel) => {
+    dispatch(setSelectedPanel(listPanel));
+  };
+
   return (
-    <div>
+    <div className="container">
       <h1>Side Bar</h1>
       <p>friend requests: {friendRequests.length}</p>
+      <button
+        onClick={() => {
+          handleSetPanel("chatsList");
+        }}
+      >
+        chats
+      </button>
+      <button
+        onClick={() => {
+          handleSetPanel("friendsList");
+        }}
+      >
+        friends
+      </button>
       <ul>
         {friendRequests.map((friendRequest) => {
           const friendRequestData = friendRequest.data();
