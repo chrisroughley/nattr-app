@@ -1,23 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
+import { setFriendRequests } from "../../state/slices/friendRequestsSlice";
 
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
-import {
-  acceptFriendRequest,
-  rejectFriendRequest,
-  initializeChat,
-} from "../../utils/firebaseUtils";
 
 import "../../styles/sideBarStyles.css";
 
 const SideBar = () => {
   const dispatch = useDispatch();
-  const [friendRequests, setFriendRequests] = useState([]);
   const user = useSelector((state) => state.user.user);
+  const friendRequests = useSelector(
+    (state) => state.friendRequests.friendRequests
+  );
 
-  //get friend request data on component mount and listen for changes on the pendingFriendRequests collections
+  //get friend request data on component mount and listen for changes on the pendingFriendRequests collection
   useEffect(() => {
     if (!user.userId) return;
     const friendRequestRef = collection(
@@ -27,28 +25,11 @@ const SideBar = () => {
       "pendingFriendRequests"
     );
     const unSub = onSnapshot(friendRequestRef, (snapshot) => {
-      setFriendRequests(snapshot.docs);
+      dispatch(setFriendRequests(snapshot.docs));
       console.log("FRIEND REQUESTS: ", snapshot.docs);
     });
     return unSub;
   }, [user.userId]);
-
-  const handleAcceptRequest = async (userId, displayName) => {
-    await acceptFriendRequest(
-      user.userId,
-      userId,
-      user.displayName,
-      displayName
-    );
-    await initializeChat(
-      [{ userId }, { userId: user.userId, displayName: user.displayName }],
-      "friend"
-    );
-  };
-
-  const handleRejectRequest = (userId) => {
-    rejectFriendRequest(user.userId, userId);
-  };
 
   const handleSetPanel = (listPanel) => {
     dispatch(setSelectedPanel(listPanel));
@@ -57,7 +38,6 @@ const SideBar = () => {
   return (
     <div className="container">
       <h1>Side Bar</h1>
-      <p>friend requests: {friendRequests.length}</p>
       <button
         onClick={() => {
           handleSetPanel("chatsList");
@@ -70,35 +50,8 @@ const SideBar = () => {
           handleSetPanel("friendsList");
         }}
       >
-        friends
+        friends{friendRequests.length ? (": ", friendRequests.length) : ""}
       </button>
-      <ul>
-        {friendRequests.map((friendRequest) => {
-          const friendRequestData = friendRequest.data();
-          return (
-            <li key={friendRequestData.userId}>
-              <p>{friendRequestData.displayName}</p>
-              <button
-                onClick={() => {
-                  handleAcceptRequest(
-                    friendRequestData.userId,
-                    friendRequestData.displayName
-                  );
-                }}
-              >
-                accept request
-              </button>
-              <button
-                onClick={() => {
-                  handleRejectRequest(friendRequestData.userId);
-                }}
-              >
-                decline request
-              </button>
-            </li>
-          );
-        })}
-      </ul>
     </div>
   );
 };

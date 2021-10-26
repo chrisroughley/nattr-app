@@ -1,7 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 
 import { setIsLogged, clearUser } from "../../state/slices/userSlice";
-import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { auth } from "../../utils/firebase";
@@ -15,6 +14,7 @@ import ChatsList from "../templates/ChatsList";
 import ChatPanel from "../templates/ChatPanel";
 
 import "../../styles/messengerPageStyles.css";
+import FriendRequests from "../templates/FriendRequests";
 
 const MessengerPage = () => {
   const listPanel = useSelector((state) => state.listPanel.selectedPanel);
@@ -53,11 +53,14 @@ const MessengerPage = () => {
         <div className={"social-lists-panel"}>
           {listPanel === "chatsList" ? (
             <ChatsList></ChatsList>
+          ) : listPanel === "friendsList" ? (
+            <FriendsList></FriendsList>
+          ) : listPanel === "friendSearch" ? (
+            <FriendsSearch></FriendsSearch>
+          ) : listPanel === "friendRequests" ? (
+            <FriendRequests></FriendRequests>
           ) : (
-            <div>
-              <FriendsSearch></FriendsSearch>
-              <FriendsList></FriendsList>
-            </div>
+            ""
           )}
         </div>
         <div className={"chat-panel"}>

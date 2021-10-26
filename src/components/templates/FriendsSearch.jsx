@@ -5,9 +5,11 @@ import { useState } from "react";
 
 import { sendFriendRequest } from "../../utils/firebaseUtils";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 
 const FriendsSearch = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const friends = useSelector((state) => state.friends.friends);
   const { register, handleSubmit } = useForm();
@@ -30,13 +32,18 @@ const FriendsSearch = () => {
     await sendFriendRequest(user.userId, userId, user.displayName);
   };
 
+  const handleSetPanel = () => {
+    dispatch(setSelectedPanel("friendsList"));
+  };
+
   const registerOptions = {
     friendSearch: { required: "missing friend search" },
   };
 
   return (
     <div>
-      <h1>Friend Search</h1>
+      <h2>Friend Search</h2>
+      <button onClick={handleSetPanel}>friends list</button>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <label>
           <input

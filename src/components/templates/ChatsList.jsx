@@ -15,6 +15,11 @@ const ChatsList = () => {
     if (!user.userId) return;
     const chatsListRef = collection(db, "users", user.userId, "chatsList");
     const unSub = onSnapshot(chatsListRef, (snapshot) => {
+      //renders latest chat in chat panel on first load
+      if (chatsList.length === 0 && snapshot.docs.length > 0) {
+        console.log("HERE");
+        dispatch(setCurrentChatId(snapshot.docs[0].data().chatId));
+      }
       setChatsList(snapshot.docs);
       console.log("CHATS LIST DATA: ", snapshot.docs);
     });
@@ -27,7 +32,7 @@ const ChatsList = () => {
 
   return (
     <div>
-      <h1>ChatsList</h1>
+      <h2>ChatsList</h2>
       <ul>
         {chatsList.map((chat) => {
           const chatData = chat.data();

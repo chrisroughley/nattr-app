@@ -187,7 +187,10 @@ export const initializeChat = async (members, chatType) => {
     members.forEach(async (member) => {
       //create a new chat document with a members collection
       const memberRef = doc(db, "chats", docRef.id, "members", member.userId);
-      await setDoc(memberRef, { userId: member.userId });
+      await setDoc(memberRef, {
+        userId: member.userId,
+        displayName: member.displayName,
+      });
       //add the new chat id to the all members chats list's
       const chatsListRef = doc(
         db,
@@ -198,7 +201,7 @@ export const initializeChat = async (members, chatType) => {
       );
       await setDoc(chatsListRef, { chatId: docRef.id });
     });
-    //if chat is just between two friends adds the chat id to the friend document on each users chats list collection
+    //if chat is just between two friends adds the chat id to the friend document on each users friends list collection
     if (chatType === "friend") {
       const userOneFriendRef = doc(
         db,
@@ -252,6 +255,6 @@ export const sendMessage = async (chatId, displayName, userId, message) => {
       });
     });
   } catch (err) {
-    console.log("INITIALIZE CHAT ERROR: ", err.message);
+    console.log("SEND MESSAGE ERROR: ", err.message);
   }
 };
