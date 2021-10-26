@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import userReducer from "../slices/userSlice";
 import friendsReducer from "../slices/friendsSlice";
-import chatsReducer from "../slices/chatsSlice";
+import currentChatReducer from "../slices/currentChatSlice";
 
 export default combineReducers({
-  chats: chatsReducer,
+  currentChat: currentChatReducer,
   user: userReducer,
   friends: friendsReducer,
 });

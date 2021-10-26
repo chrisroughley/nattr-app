@@ -214,3 +214,13 @@ export const initializeChat = async (members, chatType) => {
     console.log("ERROR MESSAGE: ", err.message);
   }
 };
+
+export const sendMessage = async (chatId, displayName, userId, message) => {
+  const messagesRef = collection(db, "chats", chatId, "messages");
+  await addDoc(messagesRef, {
+    displayName,
+    userId,
+    message,
+    messageDate: serverTimestamp(),
+  });
+};

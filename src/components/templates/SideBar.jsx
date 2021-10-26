@@ -36,7 +36,10 @@ const SideBar = () => {
       user.displayName,
       displayName
     );
-    await initializeChat([{ userId }, { userId: user.userId }], "friend");
+    await initializeChat(
+      [{ userId }, { userId: user.userId, displayName: user.displayName }],
+      "friend"
+    );
   };
 
   const handleRejectRequest = (userId) => {
