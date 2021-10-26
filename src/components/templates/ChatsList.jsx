@@ -34,6 +34,7 @@ const ChatsList = () => {
           return (
             <li key={chatData.chatId}>
               <h4>chat id: {chatData.chatId}</h4>
+              <p>last message: {chatData.message}</p>
               <button
                 onClick={() => {
                   handleChat(chatData.chatId);
