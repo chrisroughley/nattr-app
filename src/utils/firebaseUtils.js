@@ -10,6 +10,7 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  getDocs,
   serverTimestamp,
 } from "@firebase/firestore";
 
@@ -179,8 +180,8 @@ export const initializeChat = async (members, chatType) => {
     const docRef = await addDoc(chatsRef, { chatType });
     members.forEach(async (member) => {
       //create a new chat document with a members collection
-      const membersRef = doc(db, "chats", docRef.id, "members", member.userId);
-      await setDoc(membersRef, { userId: member.userId });
+      const memberRef = doc(db, "chats", docRef.id, "members", member.userId);
+      await setDoc(memberRef, { userId: member.userId });
       //add the new chat id to the all members chats list's
       const chatsListRef = doc(
         db,
@@ -222,5 +223,23 @@ export const sendMessage = async (chatId, displayName, userId, message) => {
     userId,
     message,
     messageDate: serverTimestamp(),
+  });
+  const membersRef = collection(db, "chats", chatId, "members");
+  const members = await getDocs(membersRef);
+  members.docs.forEach(async (member) => {
+    const memberData = member.data();
+    const userChatRef = doc(
+      db,
+      "users",
+      memberData.userId,
+      "chatsList",
+      chatId
+    );
+    await setDoc(userChatRef, {
+      chatId,
+      displayName,
+      message,
+      messageDate: serverTimestamp(),
+    });
   });
 };
