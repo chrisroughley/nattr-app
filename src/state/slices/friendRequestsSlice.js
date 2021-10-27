@@ -9,9 +9,13 @@ export const friendRequestsSlice = createSlice({
     setFriendRequests: (state, action) => {
       state.friendRequests = action.payload;
     },
+    clearFriendRequests: (state, action) => {
+      state.friendRequests = [];
+    },
   },
 });
 
-export const { setFriendRequests } = friendRequestsSlice.actions;
+export const { setFriendRequests, clearFriendRequests } =
+  friendRequestsSlice.actions;
 
 export default friendRequestsSlice.reducer;

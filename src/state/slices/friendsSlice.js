@@ -37,7 +37,11 @@ export const friendsSlice = createSlice({
     friends: [],
     error: { message: "" },
   },
-  reducers: {},
+  reducers: {
+    clearFriends: (state, action) => {
+      state.friends = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getFriendsByUserId.pending, (state, action) => {
       if (state.loading === "idle") {
@@ -59,5 +63,7 @@ export const friendsSlice = createSlice({
     });
   },
 });
+
+export const { clearFriends } = friendsSlice.actions;
 
 export default friendsSlice.reducer;

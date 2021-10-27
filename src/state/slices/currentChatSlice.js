@@ -35,6 +35,11 @@ export const currentChatSlice = createSlice({
     setCurrentChatId: (state, action) => {
       state.currentChatId = action.payload;
     },
+    clearChat: (state, action) => {
+      state.currentChat = {};
+      state.messages = [];
+      state.currentChatId = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getChatByChatId.pending, (state, action) => {
@@ -58,5 +63,5 @@ export const currentChatSlice = createSlice({
   },
 });
 
-export const { setCurrentChatId } = currentChatSlice.actions;
+export const { setCurrentChatId, clearChat } = currentChatSlice.actions;
 export default currentChatSlice.reducer;

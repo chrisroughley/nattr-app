@@ -1,6 +1,10 @@
 import { Link, useHistory } from "react-router-dom";
 
 import { setIsLogged, clearUser } from "../../state/slices/userSlice";
+import { clearChat } from "../../state/slices/currentChatSlice";
+import { clearFriendRequests } from "../../state/slices/friendRequestsSlice";
+import { clearFriends } from "../../state/slices/friendsSlice";
+import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { auth } from "../../utils/firebase";
@@ -34,6 +38,10 @@ const MessengerPage = () => {
       await signOut(auth);
       dispatch(setIsLogged(false));
       dispatch(clearUser());
+      dispatch(clearChat());
+      dispatch(clearFriendRequests());
+      dispatch(clearFriends());
+      dispatch(setSelectedPanel("chatsList"));
       history.push("/");
     } catch (err) {
       console.log(err.message);
