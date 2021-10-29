@@ -25,7 +25,6 @@ const MessengerPage = () => {
 
   return (
     <div>
-      <h1>Messenger Page</h1>
       <div className={"layout"}>
         <div className={"side-bar-panel"}>
           <SideBar></SideBar>

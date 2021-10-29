@@ -258,3 +258,22 @@ export const sendMessage = async (chatId, displayName, userId, message) => {
     console.log("SEND MESSAGE ERROR: ", err.message);
   }
 };
+
+export const getPendingFriendRequests = async (userId) => {
+  try {
+    const friendRequestsRef = collection(
+      db,
+      "users",
+      userId,
+      "pendingFriendRequests"
+    );
+    const querySnapshot = await getDocs(friendRequestsRef);
+    console.log("QUERY SNAPSHOT: ", querySnapshot);
+    const friendRequestsData = querySnapshot.docs.map((doc) => {
+      return doc.data().userId;
+    });
+    return friendRequestsData;
+  } catch (err) {
+    console.log("GET FRIEND REQUESTS ERROR: ", err.message);
+  }
+};

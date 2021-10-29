@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { sendFriendRequest } from "../../utils/firebaseUtils";
+import { getPendingFriendRequests } from "../../utils/firebaseUtils";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
@@ -17,8 +18,16 @@ const FriendSearch = () => {
 
   const onSubmit = async (data) => {
     const result = await index.search(data.friendSearch);
-    console.log(result.hits);
-    setSearchResults(result.hits);
+    const resultIncludingPendingRequests = await Promise.all(
+      result.hits.map(async (hit) => {
+        const pendingFriendRequests = await getPendingFriendRequests(
+          hit.objectID
+        );
+        return { ...hit, pendingFriendRequests };
+      })
+    );
+    console.log("RESULT: ", resultIncludingPendingRequests);
+    setSearchResults(resultIncludingPendingRequests);
   };
 
   const onError = (error) => {
@@ -59,8 +68,14 @@ const FriendSearch = () => {
           return [
             <ul key={result.objectID}>
               <p>display name: {result.displayName}</p>
-              {/* check if user is already in the friend list collection to prevent sending request to an existing friend */}
-              {friends.every((friend) => friend.userId !== result.objectID) ? (
+              {/* check if user is already in the friend list collection*/}
+              {friends.find((friend) => friend.userId === result.objectID) ? (
+                <p>friend</p>
+              ) : //check if an invite has already been sent
+              result.pendingFriendRequests.includes(user.userId) ? (
+                <p>pending response</p>
+              ) : (
+                //else display add friend option
                 <button
                   onClick={() => {
                     handleAddFriend(result.objectID);
@@ -68,8 +83,6 @@ const FriendSearch = () => {
                 >
                   add friend
                 </button>
-              ) : (
-                <p>friend</p>
               )}
             </ul>,
           ];

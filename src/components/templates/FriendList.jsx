@@ -29,7 +29,7 @@ const FriendList = () => {
           handleSetPanel("friendSearch");
         }}
       >
-        add friend
+        search friends
       </button>
       {friendRequests.length ? (
         <div>
