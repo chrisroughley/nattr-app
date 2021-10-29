@@ -1,14 +1,23 @@
 import { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 import { setFriendRequests } from "../../state/slices/friendRequestsSlice";
+import { setIsLogged, clearUser } from "../../state/slices/userSlice";
+import { clearChat } from "../../state/slices/currentChatSlice";
+import { clearFriendRequests } from "../../state/slices/friendRequestsSlice";
+import { clearFriends } from "../../state/slices/friendsSlice";
 
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
+import { signOut } from "@firebase/auth";
 
 import "../../styles/sideBarStyles.css";
 
 const SideBar = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const friendRequests = useSelector(
@@ -31,6 +40,29 @@ const SideBar = () => {
     return unSub;
   }, [user.userId]);
 
+  const openVideoChat = () => {
+    window.open(
+      "video",
+      "New_Window",
+      "menubar=no,toolbar=no,width=1200,height=800"
+    );
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      dispatch(setIsLogged(false));
+      dispatch(clearUser());
+      dispatch(clearChat());
+      dispatch(clearFriendRequests());
+      dispatch(clearFriends());
+      dispatch(setSelectedPanel("chatsList"));
+      history.push("/");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const handleSetPanel = (listPanel) => {
     dispatch(setSelectedPanel(listPanel));
   };
@@ -52,6 +84,9 @@ const SideBar = () => {
       >
         friends{friendRequests.length ? (": ", friendRequests.length) : ""}
       </button>
+      <button onClick={openVideoChat}>Video</button>
+      <Link to="/account">Account Management</Link>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };

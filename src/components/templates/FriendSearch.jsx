@@ -8,7 +8,7 @@ import { sendFriendRequest } from "../../utils/firebaseUtils";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 
-const FriendsSearch = () => {
+const FriendSearch = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const friends = useSelector((state) => state.friends.friends);
@@ -79,4 +79,4 @@ const FriendsSearch = () => {
   );
 };
 
-export default FriendsSearch;
+export default FriendSearch;

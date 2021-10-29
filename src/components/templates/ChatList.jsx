@@ -6,7 +6,7 @@ import { setCurrentChatId } from "../../state/slices/currentChatSlice";
 import { collection, onSnapshot } from "@firebase/firestore";
 import { db } from "../../utils/firebase";
 
-const ChatsList = () => {
+const ChatList = () => {
   const dispatch = useDispatch();
   const [chatsList, setChatsList] = useState([]);
   const user = useSelector((state) => state.user.user);
@@ -55,4 +55,4 @@ const ChatsList = () => {
   );
 };
 
-export default ChatsList;
+export default ChatList;

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getFriendsByUserId } from "../../state/slices/friendsSlice";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 
-const FriendsList = () => {
+const FriendList = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.user);
@@ -56,4 +56,4 @@ const FriendsList = () => {
   );
 };
 
-export default FriendsList;
+export default FriendList;

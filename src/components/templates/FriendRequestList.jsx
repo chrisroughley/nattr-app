@@ -6,7 +6,7 @@ import {
   rejectFriendRequest,
 } from "../../utils/firebaseUtils";
 
-const FriendRequests = () => {
+const FriendRequestList = () => {
   const friendRequests = useSelector(
     (state) => state.friendRequests.friendRequests
   );
@@ -66,4 +66,4 @@ const FriendRequests = () => {
   );
 };
 
-export default FriendRequests;
+export default FriendRequestList;
