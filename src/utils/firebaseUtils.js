@@ -7,6 +7,9 @@ import {
 } from "firebase/auth";
 
 import {
+  doc,
+  setDoc,
+  getDoc,
   addDoc,
   collection,
   deleteDoc,
@@ -15,7 +18,6 @@ import {
 } from "@firebase/firestore";
 
 import { auth, db } from "./firebase";
-import { doc, setDoc, getDoc } from "@firebase/firestore";
 
 export const createUserWithEmail = async (displayName, email, password) => {
   try {

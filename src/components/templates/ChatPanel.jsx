@@ -1,3 +1,5 @@
+import MessageBox from "../ui-components/MessageBox";
+
 import { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -5,18 +7,14 @@ import { getChatByChatId } from "../../state/slices/currentChatSlice";
 
 import { collection, onSnapshot } from "@firebase/firestore";
 import { db } from "../../utils/firebase";
-import { sendMessage } from "../../utils/firebaseUtils";
-
-import { useForm } from "react-hook-form";
 
 import "../../styles/chatPanelStyles.css";
 
 const ChatPanel = () => {
   const dispatch = useDispatch();
   const chatId = useSelector((state) => state.currentChat.currentChatId);
-  const user = useSelector((state) => state.user.user);
+
   const [messages, setMessages] = useState([]);
-  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     if (!chatId) return;
@@ -28,16 +26,6 @@ const ChatPanel = () => {
     });
     return unSub;
   }, [chatId]);
-
-  const onSubmit = async (data) => {
-    await sendMessage(chatId, user.displayName, user.userId, data.message);
-    setValue("message", "", { shouldValidate: true });
-  };
-
-  const onError = (error) => {
-    console.log("MESSAGE ERROR: ", error);
-  };
-  const registerOptions = { message: { required: "no message" } };
 
   return (
     <div>
@@ -55,19 +43,7 @@ const ChatPanel = () => {
             );
           })}
         </ul>
-        <form
-          className={"message-box"}
-          onSubmit={handleSubmit(onSubmit, onError)}
-        >
-          <label>
-            send message
-            <input
-              type="text"
-              {...register("message", registerOptions.message)}
-            />
-            <input type="submit" value="send" />
-          </label>
-        </form>
+        <MessageBox></MessageBox>
       </div>
     </div>
   );

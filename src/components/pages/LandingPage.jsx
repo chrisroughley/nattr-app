@@ -7,7 +7,6 @@ const LandingPage = () => {
     <div>
       <h1>Landing Page</h1>
       <Link to="/login">Login</Link>
-
       <DevComponent></DevComponent>
     </div>
   );

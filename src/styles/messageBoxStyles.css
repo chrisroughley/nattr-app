@@ -1,0 +1,4 @@
+.selected-files {
+  display: flex;
+  flex-direction: row;
+}

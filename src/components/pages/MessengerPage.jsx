@@ -30,16 +30,11 @@ const MessengerPage = () => {
           <SideBar></SideBar>
         </div>
         <div className={"social-lists-panel"}>
-          {listPanel === "chatsList" ? (
-            <ChatList></ChatList>
-          ) : listPanel === "friendsList" ? (
-            <FriendList></FriendList>
-          ) : listPanel === "friendSearch" ? (
-            <FriendSearch></FriendSearch>
-          ) : listPanel === "friendRequests" ? (
+          {listPanel === "chatsList" && <ChatList></ChatList>}
+          {listPanel === "friendsList" && <FriendList></FriendList>}
+          {listPanel === "friendSearch" && <FriendSearch></FriendSearch>}
+          {listPanel === "friendRequests" && (
             <FriendRequestList></FriendRequestList>
-          ) : (
-            ""
           )}
         </div>
         <div className={"chat-panel"}>
