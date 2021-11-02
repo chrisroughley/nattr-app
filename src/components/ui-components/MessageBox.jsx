@@ -4,6 +4,11 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 import { sendMessage } from "../../utils/firebaseUtils";
+import { sendFiles } from "../../utils/firebaseStorageUtils";
+import { storage } from "../../utils/firebase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
+import { generateId } from "../../utils/componentUtils";
 
 import "../../styles/messageBoxStyles.css";
 
@@ -14,20 +19,31 @@ const MessageBox = () => {
   const [media, setMedia] = useState([]);
 
   const onSubmit = async (data) => {
-    if (data.message) {
-      await sendMessage(chatId, user.displayName, user.userId, data.message);
-      setValue("message", "", { shouldValidate: true });
-    }
-    if (data.media.length) {
-      console.log(data.media[0]);
-      setMedia((media) => [
-        ...media,
-        {
-          type: data.media[0].type,
-          fileURL: URL.createObjectURL(data.media[0]),
-        },
-      ]);
+    if (media.length) {
+      const mediaObject = {};
+      media.forEach((file) => {
+        mediaObject[file.fileId] = {
+          status: "pending",
+          downloadURL: "",
+          type: file.fileData.type,
+        };
+      });
+      const messageId = await sendMessage(
+        chatId,
+        user.displayName,
+        user.userId,
+        data.message,
+        mediaObject
+      );
+
+      await sendFiles(media, chatId, messageId);
+
+      setMedia([]);
       setValue("media", []);
+      setValue("message", "");
+    } else if (data.message) {
+      await sendMessage(chatId, user.displayName, user.userId, data.message);
+      setValue("message", "");
     }
   };
 
@@ -46,6 +62,7 @@ const MessageBox = () => {
           {
             fileData: file,
             fileURL: URL.createObjectURL(file),
+            fileId: generateId(),
           },
         ]);
       });

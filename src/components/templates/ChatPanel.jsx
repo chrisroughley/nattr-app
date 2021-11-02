@@ -35,10 +35,29 @@ const ChatPanel = () => {
         <ul>
           {messages.map((message) => {
             const messageData = message.data();
+
+            console.log(messageData);
             return (
               <li key={messageData.messageDate}>
                 <h4>{messageData.displayName}</h4>
                 <p>{messageData.message}</p>
+                <ul>
+                  {Object.values(messageData.media).map((file) => {
+                    if (file.status === "pending") {
+                      return <p>pending</p>;
+                    } else if (file.type.includes("image")) {
+                      return <img src={file.downloadURL} height="200" />;
+                    } else if (file.type.includes("video")) {
+                      return (
+                        <video
+                          controls
+                          src={file.downloadURL}
+                          height="200"
+                        ></video>
+                      );
+                    }
+                  })}
+                </ul>
               </li>
             );
           })}

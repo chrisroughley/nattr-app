@@ -227,15 +227,22 @@ export const initializeChat = async (members, chatType) => {
   }
 };
 
-export const sendMessage = async (chatId, displayName, userId, message) => {
+export const sendMessage = async (
+  chatId,
+  displayName,
+  userId,
+  message,
+  media = {}
+) => {
   try {
     //add message to chat's message collection
     const messagesRef = collection(db, "chats", chatId, "messages");
-    await addDoc(messagesRef, {
+    const docRef = await addDoc(messagesRef, {
       displayName,
       userId,
       message,
       messageDate: serverTimestamp(),
+      media,
     });
     //update each members chat list to the latest sent message
     const membersRef = collection(db, "chats", chatId, "members");
@@ -252,10 +259,11 @@ export const sendMessage = async (chatId, displayName, userId, message) => {
       await setDoc(userChatRef, {
         chatId,
         displayName,
-        message,
+        message: message || `${displayName} sent a file`,
         messageDate: serverTimestamp(),
       });
     });
+    return docRef.id;
   } catch (err) {
     console.log("SEND MESSAGE ERROR: ", err.message);
   }

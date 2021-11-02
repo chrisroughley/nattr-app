@@ -17,7 +17,6 @@ const ChatList = () => {
     const unSub = onSnapshot(chatsListRef, (snapshot) => {
       //renders latest chat in chat panel on first load
       if (chatsList.length === 0 && snapshot.docs.length > 0) {
-        console.log("HERE");
         dispatch(setCurrentChatId(snapshot.docs[0].data().chatId));
       }
       setChatsList(snapshot.docs);
