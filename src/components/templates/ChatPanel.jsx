@@ -40,21 +40,21 @@ const ChatPanel = () => {
             return (
               <li key={messageData.messageDate}>
                 <h4>{messageData.displayName}</h4>
-                <p>{messageData.message}</p>
+                {messageData.message && <p>{messageData.message}</p>}
                 <ul>
                   {Object.values(messageData.media).map((file) => {
                     if (file.status === "pending") {
                       return <p>pending</p>;
                     } else if (file.type.includes("image")) {
-                      return <img src={file.downloadURL} height="200" />;
+                      return <img src={file.downloadURL} height="100" alt="" />;
                     } else if (file.type.includes("video")) {
                       return (
-                        <video
-                          controls
-                          src={file.downloadURL}
-                          height="200"
-                        ></video>
+                        <video controls src={file.downloadURL} height="100" />
                       );
+                    } else if (file.type.includes("audio")) {
+                      return <audio controls src={file.downloadURL} />;
+                    } else {
+                      return <p>file</p>;
                     }
                   })}
                 </ul>

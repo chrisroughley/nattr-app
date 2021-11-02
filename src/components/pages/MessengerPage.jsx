@@ -1,14 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
-
-import { setIsLogged, clearUser } from "../../state/slices/userSlice";
-import { clearChat } from "../../state/slices/currentChatSlice";
-import { clearFriendRequests } from "../../state/slices/friendRequestsSlice";
-import { clearFriends } from "../../state/slices/friendsSlice";
-import { setSelectedPanel } from "../../state/slices/listPanelSlice";
-import { useDispatch, useSelector } from "react-redux";
-
-import { auth } from "../../utils/firebase";
-import { signOut } from "@firebase/auth";
+import { useSelector } from "react-redux";
 
 import DevComponent from "../DevComponent";
 import SideBar from "../templates/SideBar";

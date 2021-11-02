@@ -9,6 +9,7 @@ export const sendFiles = async (files, chatId, messageId) => {
 
   files.forEach(async (file) => {
     const fileRef = ref(storage, file.fileData.name);
+    const filesRef = doc(db, "chats", chatId, "files", file.fileId);
     const uploadTask = uploadBytesResumable(fileRef, file.fileData);
     uploadTask.on(
       "state_changed",
@@ -17,8 +18,21 @@ export const sendFiles = async (files, chatId, messageId) => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
       },
-      (err) => {
+      async (err) => {
         console.log(err.message);
+        await setDoc(
+          messageRef,
+          {
+            media: {
+              [file.fileId]: {
+                downloadURL: "",
+                status: "error",
+                type: file.fileData.type,
+              },
+            },
+          },
+          { merge: true }
+        );
       },
       async () => {
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
@@ -35,6 +49,10 @@ export const sendFiles = async (files, chatId, messageId) => {
           },
           { merge: true }
         );
+        await setDoc(filesRef, {
+          downloadURL,
+          type: file.fileData.type,
+        });
       }
     );
   });

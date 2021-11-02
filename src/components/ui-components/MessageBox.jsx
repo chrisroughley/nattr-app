@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 
 import { sendMessage } from "../../utils/firebaseUtils";
 import { sendFiles } from "../../utils/firebaseStorageUtils";
-import { storage } from "../../utils/firebase";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 import { generateId } from "../../utils/componentUtils";
 
