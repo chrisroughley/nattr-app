@@ -8,7 +8,8 @@ export const sendFiles = async (files, chatId, messageId) => {
   const messageRef = doc(db, "chats", chatId, "messages", messageId);
 
   files.forEach(async (file) => {
-    const fileRef = ref(storage, file.fileData.name);
+    const storageName = file.fileId + file.fileData.name;
+    const fileRef = ref(storage, storageName);
     const filesRef = doc(db, "chats", chatId, "files", file.fileId);
     const uploadTask = uploadBytesResumable(fileRef, file.fileData);
     uploadTask.on(

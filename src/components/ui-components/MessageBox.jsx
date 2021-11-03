@@ -15,6 +15,7 @@ const MessageBox = () => {
   const user = useSelector((state) => state.user.user);
   const { register, handleSubmit, setValue } = useForm();
   const [media, setMedia] = useState([]);
+  const [messageBoxColor, setMessageBoxColor] = useState("unset");
 
   const onSubmit = async (data) => {
     if (media.length) {
@@ -49,40 +50,90 @@ const MessageBox = () => {
     console.log("MESSAGE ERROR: ", error);
   };
 
+  const addFileToMedia = (file) => {
+    setMedia((media) => [
+      ...media,
+      {
+        fileData: file,
+        fileURL: URL.createObjectURL(file),
+        fileId: generateId(),
+      },
+    ]);
+  };
+
   const handleChange = (e) => {
     if (e.type === "change") {
       const files = [...e.target.files];
       console.log(files);
       files.forEach((file) => {
         console.log(file);
-        setMedia((media) => [
-          ...media,
-          {
-            fileData: file,
-            fileURL: URL.createObjectURL(file),
-            fileId: generateId(),
-          },
-        ]);
+        addFileToMedia(file);
       });
     }
   };
 
+  const handlePaste = async (e) => {
+    if (e.clipboardData.files.length) {
+      const file = await e.clipboardData.files[0];
+      console.log(file);
+      addFileToMedia(file);
+    }
+  };
+
+  const handleDragEvent = async (e) => {
+    e.preventDefault();
+    switch (e.type) {
+      case "dragover":
+        if (messageBoxColor === "unset" && e.dataTransfer.files) {
+          setMessageBoxColor("blue");
+        }
+        break;
+      case "dragleave":
+        if (messageBoxColor === "blue") {
+          setMessageBoxColor("unset");
+        }
+        break;
+      case "drop":
+        const file = await e.dataTransfer.files[0];
+        console.log(file);
+        if (messageBoxColor === "blue") {
+          setMessageBoxColor("unset");
+        }
+        addFileToMedia(file);
+        break;
+    }
+  };
+
+  const testStyle = {
+    backgroundColor: messageBoxColor,
+  };
+
   return (
-    <div className={"message-box"}>
+    <div
+      onDragLeave={handleDragEvent}
+      onDragOver={handleDragEvent}
+      onDrop={handleDragEvent}
+      className={"message-box"}
+      style={testStyle}
+    >
       <ul className="selected-files">
         {media.map((file) => {
           console.log(file);
           return (
             <li key={file.fileData.lastModified}>
-              {file.fileData.type === "image/jpeg" ? (
+              {file.fileData.type.includes("image") ? (
                 <img src={file.fileURL} alt="" height="100" width="100" />
-              ) : (
+              ) : file.fileData.type.includes("video") ? (
                 <video
                   controls
                   src={file.fileURL}
                   height="100"
                   width="100"
                 ></video>
+              ) : file.fileData.type.includes("audio") ? (
+                <audio />
+              ) : (
+                <p>file</p>
               )}
             </li>
           );
@@ -98,7 +149,7 @@ const MessageBox = () => {
           />
         </label>
         <label>
-          <input type="text" {...register("message")} />
+          <input onPaste={handlePaste} type="text" {...register("message")} />
           <input type="submit" value="send" />
         </label>
       </form>

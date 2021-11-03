@@ -43,19 +43,23 @@ const ChatPanel = () => {
                 {messageData.message && <p>{messageData.message}</p>}
                 <ul>
                   {Object.values(messageData.media).map((file) => {
+                    let mediaElement = "";
                     if (file.status === "pending") {
-                      return <p>pending</p>;
+                      mediaElement = <p>pending</p>;
                     } else if (file.type.includes("image")) {
-                      return <img src={file.downloadURL} height="100" alt="" />;
+                      mediaElement = (
+                        <img src={file.downloadURL} height="100" alt="" />
+                      );
                     } else if (file.type.includes("video")) {
-                      return (
+                      mediaElement = (
                         <video controls src={file.downloadURL} height="100" />
                       );
                     } else if (file.type.includes("audio")) {
-                      return <audio controls src={file.downloadURL} />;
+                      mediaElement = <audio controls src={file.downloadURL} />;
                     } else {
-                      return <p>file</p>;
+                      mediaElement = <p>file</p>;
                     }
+                    return <li>{mediaElement}</li>;
                   })}
                 </ul>
               </li>
