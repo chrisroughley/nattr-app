@@ -45,6 +45,7 @@ export const sendFiles = async (files, chatId, messageId) => {
                 downloadURL,
                 status: "success",
                 type: file.fileData.type,
+                fileId: file.fileId,
               },
             },
           },
