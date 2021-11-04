@@ -99,7 +99,9 @@ const MessageBox = () => {
         if (messageBoxColor === "blue") {
           setMessageBoxColor("unset");
         }
-        addFileToMedia(file);
+        if (file.type) {
+          addFileToMedia(file);
+        }
         break;
     }
   };
