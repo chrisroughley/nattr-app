@@ -8,12 +8,13 @@ import { getChatByChatId } from "../../state/slices/currentChatSlice";
 import { collection, onSnapshot } from "@firebase/firestore";
 import { db } from "../../utils/firebase";
 
+// import ogs from "open-graph-scraper";
+
 import "../../styles/chatPanelStyles.css";
 
 const ChatPanel = () => {
   const dispatch = useDispatch();
   const chatId = useSelector((state) => state.currentChat.currentChatId);
-
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const ChatPanel = () => {
             const messageData = message.data();
 
             console.log(messageData);
+
             return (
               <li key={messageData.messageDate}>
                 <h4>{messageData.displayName}</h4>

@@ -17,7 +17,9 @@ import {
   serverTimestamp,
 } from "@firebase/firestore";
 
-import { auth, db } from "./firebase";
+import { httpsCallable } from "@firebase/functions";
+
+import { auth, db, functions } from "./firebase";
 
 export const createUserWithEmail = async (displayName, email, password) => {
   try {
@@ -235,6 +237,9 @@ export const sendMessage = async (
   media = {}
 ) => {
   try {
+    const URLRegex =
+      /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+
     //add message to chat's message collection
     const messagesRef = collection(db, "chats", chatId, "messages");
     const docRef = await addDoc(messagesRef, {
@@ -244,6 +249,15 @@ export const sendMessage = async (
       messageDate: serverTimestamp(),
       media,
     });
+    //if user posts a url get the meta data for the url and add the object to the sent message
+    if (URLRegex.test(message)) {
+      const getMetaData = httpsCallable(functions, "getMetaData");
+      getMetaData({
+        url: message,
+        chatId,
+        messageId: docRef.id,
+      });
+    }
     //update each members chat list to the latest sent message
     const membersRef = collection(db, "chats", chatId, "members");
     const members = await getDocs(membersRef);
@@ -256,7 +270,7 @@ export const sendMessage = async (
         "chatsList",
         chatId
       );
-      await setDoc(userChatRef, {
+      setDoc(userChatRef, {
         chatId,
         displayName,
         message: message || `${displayName} sent a file`,

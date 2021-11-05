@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 
-import { auth, db } from "../utils/firebase";
+import { auth, db, functions } from "../utils/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
+import { httpsCallable } from "@firebase/functions";
 
-import { deleteDoc, doc, serverTimestamp, setDoc } from "@firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "@firebase/firestore";
 
 const DevComponent = () => {
   const user = useSelector((state) => state.user.user);
@@ -32,10 +33,14 @@ const DevComponent = () => {
     );
   };
 
-  const deleteDocumentTest = async () => {
-    await deleteDoc(
-      doc(db, "users", user.userId, "pendingFriendRequests", user.userId)
-    );
+  const callFunctionTest = async () => {
+    const testFunction = httpsCallable(functions, "getMetaData");
+    const result = await testFunction({
+      url: "https://stackoverflow.com/questions/8498592/extract-hostname-name-from-string",
+      chatId: "noC9vvJ3lvv0HOHpQ7PS",
+      messageId: "51f3CkpsNCOa4nZ6my2J",
+    });
+    console.log(result);
   };
 
   return (
@@ -43,7 +48,7 @@ const DevComponent = () => {
       <button onClick={getReduxUser}>redux user</button>
       <button onClick={getAuthUser}>auth user</button>
       <button onClick={createCollectionTest}>create collection test</button>
-      <button onClick={deleteDocumentTest}>delete document test</button>
+      <button onClick={callFunctionTest}>call function test</button>
     </div>
   );
 };
