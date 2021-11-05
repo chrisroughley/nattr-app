@@ -243,11 +243,7 @@ export const sendMessage = async (
     let urlMetaData = {};
     const urlMatches = message.match(urlRegex);
 
-    console.log(message);
-    console.log(urlMatches);
-
-    if (urlMatches[0] && urlMatches.length === 1) {
-      console.log("here");
+    if (urlMatches && urlMatches.length === 1) {
       urlMetaData = { status: "pending" };
     }
 
@@ -263,7 +259,7 @@ export const sendMessage = async (
     });
 
     //if a user posts a message containing a single url get the meta data for the url and add the object to the sent message
-    if (urlMatches[0] && urlMatches.length === 1) {
+    if (urlMatches && urlMatches.length === 1) {
       const getMetaData = httpsCallable(functions, "getMetaData");
       getMetaData({
         url: urlMatches[0],
