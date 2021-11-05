@@ -35,13 +35,13 @@ const MessageBox = () => {
         mediaObject
       );
 
-      await sendFiles(media, chatId, messageId);
+      sendFiles(media, chatId, messageId);
 
       setMedia([]);
       setValue("media", []);
       setValue("message", "");
     } else if (data.message) {
-      await sendMessage(chatId, user.displayName, user.userId, data.message);
+      sendMessage(chatId, user.displayName, user.userId, data.message);
       setValue("message", "");
     }
   };

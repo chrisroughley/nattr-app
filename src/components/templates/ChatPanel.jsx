@@ -62,6 +62,10 @@ const ChatPanel = () => {
                     );
                   })}
                 </ul>
+                {messageData.urlMetaData.status === "pending" && <p>pending</p>}
+                {messageData.urlMetaData.status === "success" && (
+                  <p>{messageData.urlMetaData.title}</p>
+                )}
               </li>
             );
           })}

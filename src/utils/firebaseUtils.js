@@ -233,12 +233,23 @@ export const sendMessage = async (
   chatId,
   displayName,
   userId,
-  message,
+  message = "",
   media = {}
 ) => {
   try {
-    const URLRegex =
-      /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+    const urlRegex =
+      /(?:https?:\/\/)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
+
+    let urlMetaData = {};
+    const urlMatches = message.match(urlRegex);
+
+    console.log(message);
+    console.log(urlMatches);
+
+    if (urlMatches[0] && urlMatches.length === 1) {
+      console.log("here");
+      urlMetaData = { status: "pending" };
+    }
 
     //add message to chat's message collection
     const messagesRef = collection(db, "chats", chatId, "messages");
@@ -248,16 +259,19 @@ export const sendMessage = async (
       message,
       messageDate: serverTimestamp(),
       media,
+      urlMetaData,
     });
-    //if user posts a url get the meta data for the url and add the object to the sent message
-    if (URLRegex.test(message)) {
+
+    //if a user posts a message containing a single url get the meta data for the url and add the object to the sent message
+    if (urlMatches[0] && urlMatches.length === 1) {
       const getMetaData = httpsCallable(functions, "getMetaData");
       getMetaData({
-        url: message,
+        url: urlMatches[0],
         chatId,
         messageId: docRef.id,
       });
     }
+
     //update each members chat list to the latest sent message
     const membersRef = collection(db, "chats", chatId, "members");
     const members = await getDocs(membersRef);
@@ -277,6 +291,7 @@ export const sendMessage = async (
         messageDate: serverTimestamp(),
       });
     });
+
     return docRef.id;
   } catch (err) {
     console.log("SEND MESSAGE ERROR: ", err.message);
