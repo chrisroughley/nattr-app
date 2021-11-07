@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import { useDispatch } from "react-redux";
 import { getUserById } from "../../state/slices/userSlice";
@@ -10,7 +10,7 @@ import zxcvbn from "zxcvbn";
 import { createUserWithEmail } from "../../utils/firebaseUtils";
 
 const SignUpForm = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [passwordStrength, setPasswordStrength] = useState(0);
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const SignUpForm = () => {
         setValue("email", "", { shouldValidate: true });
         setValue("password", "", { shouldValidate: true });
         setValue("confirmationPassword", "", { shouldValidate: true });
-        history.push("/messenger");
+        navigate("/messenger");
       }
     } else {
       console.log("passwords do not match");

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
@@ -17,7 +17,7 @@ import { signOut } from "@firebase/auth";
 import "../../styles/sideBarStyles.css";
 
 const SideBar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const friendRequests = useSelector(
@@ -57,7 +57,7 @@ const SideBar = () => {
       dispatch(clearFriendRequests());
       dispatch(clearFriends());
       dispatch(setSelectedPanel("chatsList"));
-      history.push("/");
+      navigate("/");
     } catch (err) {
       console.log(err.message);
     }

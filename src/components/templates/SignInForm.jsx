@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import {
   signInUserWithEmail,
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { getUserById } from "../../state/slices/userSlice";
 
 const SignInForm = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { register, handleSubmit, setValue } = useForm();
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ const SignInForm = () => {
       setValue("email", "", { shouldValidate: true });
       setValue("password", "", { shouldValidate: true });
       dispatch(getUserById(userId));
-      history.push("/messenger");
+      navigate("/messenger");
     }
   };
 
@@ -33,7 +33,7 @@ const SignInForm = () => {
     const userId = await signInWithSocial(authProvider);
     if (!userId.error) {
       dispatch(getUserById(userId));
-      history.push("/messenger");
+      navigate("/messenger");
     }
   };
 

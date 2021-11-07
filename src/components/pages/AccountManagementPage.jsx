@@ -1,11 +1,11 @@
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 const AccountManagementPage = () => {
-  const history = useHistory();
+  const { goBack } = useNavigate();
   return (
     <div>
       <h1>Account Management Page</h1>
-      <button onClick={history.goBack}>Go back</button>
+      <button onClick={goBack}>Go back</button>
     </div>
   );
 };

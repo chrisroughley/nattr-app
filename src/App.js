@@ -2,10 +2,11 @@ import "./App.css";
 
 import { useEffect } from "react";
 
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import { auth } from "./utils/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
+import { handlePresence } from "./utils/firebaseDatabaseUtils";
 
 import LandingPage from "./components/pages/LandingPage";
 import LoginPage from "./components/pages/LoginPage";
@@ -29,6 +30,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        handlePresence();
         dispatch(setIsLogged(true));
         dispatch(getUserById(user.uid));
       } else {
@@ -40,29 +42,35 @@ function App() {
   return (
     <div className="App">
       {isInitialized ? (
-        <Switch>
-          <Route exact path="/">
-            {isLogged ? <Redirect to="/messenger" /> : <LandingPage />}
-            {/* <LandingPage /> */}
-          </Route>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route exact path="/account">
-            {/* {isLogged ? <AccountManagementPage /> : <Redirect to="/" />} */}
-            <AccountManagementPage />
-          </Route>
-          <Route exact path="/messenger">
-            {isLogged ? <MessengerPage /> : <Redirect to="/" />}
-            {/* <MessengerPage /> */}
-          </Route>
-          <Route exact path="/video">
-            <VideoChatPage />
-          </Route>
-          <Route>
-            <BadURLPage />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isLogged ? <Navigate replace to="/messenger" /> : <LandingPage />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              isLogged ? <Navigate replace to="/messenger" /> : <LoginPage />
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              isLogged ? <AccountManagementPage /> : <Navigate replace to="/" />
+            }
+          />
+          <Route
+            path="/messenger"
+            element={isLogged ? <MessengerPage /> : <Navigate replace to="/" />}
+          />
+          <Route
+            path="/video"
+            element={isLogged ? <VideoChatPage /> : <Navigate replace to="/" />}
+          />
+          <Route path="*" element={<BadURLPage />} />
+        </Routes>
       ) : (
         <div>initializing</div>
       )}
