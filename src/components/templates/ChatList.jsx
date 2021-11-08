@@ -5,6 +5,7 @@ import { setCurrentChatId } from "../../state/slices/currentChatSlice";
 
 import { collection, onSnapshot } from "@firebase/firestore";
 import { db } from "../../utils/firebase";
+import { getLatestChat } from "../../utils/firebaseUtils";
 
 const ChatList = () => {
   const dispatch = useDispatch();
@@ -12,18 +13,28 @@ const ChatList = () => {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (!user.userId) return;
-    const chatsListRef = collection(db, "users", user.userId, "chatsList");
-    const unSub = onSnapshot(chatsListRef, (snapshot) => {
-      //renders latest chat in chat panel on first load
-      if (chatsList.length === 0 && snapshot.docs.length > 0) {
-        dispatch(setCurrentChatId(snapshot.docs[0].data().chatId));
+    const asyncWrapper = async () => {
+      const latestChat = await getLatestChat(user.userId);
+      if (!latestChat.empty) {
+        dispatch(setCurrentChatId(latestChat.docs[0].data().chatId));
       }
+    };
+    asyncWrapper();
+  }, [user.userId, dispatch]);
+
+  useEffect(() => {
+    const chatsListRef = collection(
+      db,
+      "users",
+      user.userId || "noUser",
+      "chatsList"
+    );
+    const unSub = onSnapshot(chatsListRef, (snapshot) => {
       setChatsList(snapshot.docs);
       console.log("CHATS LIST DATA: ", snapshot.docs);
     });
     return unSub;
-  }, [user.userId]);
+  }, [user.userId, dispatch]);
 
   const handleChat = (chatId) => {
     dispatch(setCurrentChatId(chatId));

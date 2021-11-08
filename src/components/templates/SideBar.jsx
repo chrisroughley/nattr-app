@@ -26,11 +26,10 @@ const SideBar = () => {
 
   //get friend request data on component mount and listen for changes on the pendingFriendRequests collection
   useEffect(() => {
-    if (!user.userId) return;
     const friendRequestRef = collection(
       db,
       "users",
-      user.userId,
+      user.userId || "noUser",
       "pendingFriendRequests"
     );
     const unSub = onSnapshot(friendRequestRef, (snapshot) => {
@@ -38,7 +37,7 @@ const SideBar = () => {
       console.log("FRIEND REQUESTS: ", snapshot.docs);
     });
     return unSub;
-  }, [user.userId]);
+  }, [user.userId, dispatch]);
 
   const openVideoChat = () => {
     window.open(

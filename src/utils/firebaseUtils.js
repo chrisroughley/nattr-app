@@ -15,6 +15,9 @@ import {
   deleteDoc,
   getDocs,
   serverTimestamp,
+  query,
+  orderBy,
+  limit,
 } from "@firebase/firestore";
 
 import { httpsCallable } from "@firebase/functions";
@@ -64,6 +67,8 @@ export const signInWithSocial = async (authProvider) => {
       break;
     case "facebook":
       provider = new FacebookAuthProvider();
+      break;
+    default:
       break;
   }
   try {
@@ -311,4 +316,15 @@ export const getPendingFriendRequests = async (userId) => {
   } catch (err) {
     console.log("GET FRIEND REQUESTS ERROR: ", err.message);
   }
+};
+
+export const getLatestChat = async (userId) => {
+  const chatsListRef = collection(db, "users", userId || "noUser", "chatsList");
+  const latestChatQuery = query(
+    chatsListRef,
+    orderBy("messageDate", "desc"),
+    limit(1)
+  );
+  const querySnapshot = await getDocs(latestChatQuery);
+  return querySnapshot;
 };

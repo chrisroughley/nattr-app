@@ -103,6 +103,8 @@ const MessageBox = () => {
           addFileToMedia(file);
         }
         break;
+      default:
+        break;
     }
   };
 

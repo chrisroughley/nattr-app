@@ -21,12 +21,18 @@ const ChatPanel = () => {
     if (!chatId) return;
     dispatch(getChatByChatId(chatId));
     const messagesRef = collection(db, "chats", chatId, "messages");
-    const unSub = onSnapshot(messagesRef, (snapshot) => {
-      setMessages(snapshot.docs);
-      console.log("MESSAGES: ", snapshot.docs);
-    });
+    const unSub = onSnapshot(
+      messagesRef,
+      (snapshot) => {
+        setMessages(snapshot.docs);
+        console.log("MESSAGES: ", snapshot.docs);
+      },
+      (error) => {
+        console.log("ERROR: ", error);
+      }
+    );
     return unSub;
-  }, [chatId]);
+  }, [chatId, dispatch]);
 
   return (
     <div>
@@ -36,9 +42,6 @@ const ChatPanel = () => {
         <ul>
           {messages.map((message) => {
             const messageData = message.data();
-
-            console.log(messageData);
-
             return (
               <li key={messageData.messageDate}>
                 <h4>{messageData.displayName}</h4>

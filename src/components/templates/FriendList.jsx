@@ -6,7 +6,6 @@ import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 
 const FriendList = () => {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user.user);
   const friends = useSelector((state) => state.friends.friends);
   const friendRequests = useSelector(
@@ -15,7 +14,7 @@ const FriendList = () => {
 
   useEffect(() => {
     dispatch(getFriendsByUserId(user.userId));
-  }, [user.userId]);
+  }, [user.userId, dispatch]);
 
   const handleSetPanel = (panel) => {
     dispatch(setSelectedPanel(panel));
