@@ -3,3 +3,22 @@
   bottom: 10px;
   left: calc(30vw + 10px);
 }
+
+.chat-panel-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.messages-container {
+  height: 100%;
+
+  overflow: hidden;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+}

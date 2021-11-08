@@ -25,6 +25,7 @@ const ChatPanel = () => {
       messagesRef,
       (snapshot) => {
         setMessages(snapshot.docs);
+        console.log("DOC CHANGES", snapshot.docChanges());
         console.log("MESSAGES: ", snapshot.docs);
       },
       (error) => {
@@ -35,17 +36,22 @@ const ChatPanel = () => {
   }, [chatId, dispatch]);
 
   return (
-    <div>
+    <div className={"chat-panel-container"}>
       <h1>Chat Panel</h1>
       <ul></ul>
-      <div>
-        <ul>
+      <div className={"messages-container"}>
+        <ul className={"messages"}>
           {messages.map((message) => {
             const messageData = message.data();
             return (
               <li key={messageData.messageDate}>
                 <h4>{messageData.displayName}</h4>
-                {messageData.message && <p>{messageData.message}</p>}
+                {messageData.message && (
+                  <p>
+                    {messageData.message} -{" "}
+                    {messageData.messageDate.toDate().toString()}
+                  </p>
+                )}
                 <ul>
                   {Object.values(messageData.media).map((file) => {
                     return (
