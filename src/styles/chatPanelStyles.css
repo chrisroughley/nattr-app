@@ -1,24 +1,21 @@
-.message-box {
-  position: absolute;
-  bottom: 10px;
-  left: calc(30vw + 10px);
-}
-
 .chat-panel-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
 
 .messages-container {
-  height: 100%;
-
+  height: auto;
   overflow: hidden;
 }
 
 .messages {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   height: 100%;
   overflow-y: scroll;
+  margin: 0;
 }

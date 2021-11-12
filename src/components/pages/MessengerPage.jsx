@@ -15,7 +15,7 @@ const MessengerPage = () => {
 
   return (
     <div>
-      <div className={"layout"}>
+      <div className={"messenger-container"}>
         <div className={"side-bar-panel"}>
           <SideBar></SideBar>
         </div>
@@ -31,7 +31,7 @@ const MessengerPage = () => {
           <ChatPanel></ChatPanel>
         </div>
       </div>
-      <DevComponent></DevComponent>
+      {/* <DevComponent></DevComponent> */}
     </div>
   );
 };

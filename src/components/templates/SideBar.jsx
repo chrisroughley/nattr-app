@@ -34,7 +34,6 @@ const SideBar = () => {
     );
     const unSub = onSnapshot(friendRequestRef, (snapshot) => {
       dispatch(setFriendRequests(snapshot.docs));
-      console.log("FRIEND REQUESTS: ", snapshot.docs);
     });
     return unSub;
   }, [user.userId, dispatch]);

@@ -18,6 +18,7 @@ import {
   query,
   orderBy,
   limit,
+  startAfter,
 } from "@firebase/firestore";
 
 import { httpsCallable } from "@firebase/functions";
@@ -326,5 +327,17 @@ export const getLatestChat = async (userId) => {
     limit(1)
   );
   const querySnapshot = await getDocs(latestChatQuery);
+  return querySnapshot;
+};
+
+export const getMoreMessages = async (chatId, lastDoc) => {
+  const messagesRef = collection(db, "chats", chatId, "messages");
+  const messagesQuery = query(
+    messagesRef,
+    orderBy("messageDate", "desc"),
+    limit(5),
+    startAfter(lastDoc)
+  );
+  const querySnapshot = await getDocs(messagesQuery);
   return querySnapshot;
 };

@@ -1,14 +1,20 @@
 import MessageBox from "../ui-components/MessageBox";
 
 import { useEffect, useState } from "react";
+import { Waypoint } from "react-waypoint";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getChatByChatId } from "../../state/slices/currentChatSlice";
 
-import { collection, onSnapshot } from "@firebase/firestore";
+import {
+  collection,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+} from "@firebase/firestore";
 import { db } from "../../utils/firebase";
-
-// import ogs from "open-graph-scraper";
+import { getMoreMessages } from "../../utils/firebaseUtils";
 
 import "../../styles/chatPanelStyles.css";
 
@@ -21,12 +27,74 @@ const ChatPanel = () => {
     if (!chatId) return;
     dispatch(getChatByChatId(chatId));
     const messagesRef = collection(db, "chats", chatId, "messages");
-    const unSub = onSnapshot(
+    const messagesQuery = query(
       messagesRef,
+      orderBy("messageDate", "desc"),
+      limit(20)
+    );
+
+    const isMediaUpload = (doc) => {
+      if (!doc[0]) return false;
+      const mediaContents = Object.values(doc[0].media);
+      const hasDate = doc[0].messageDate;
+      const isSingleDoc = doc.length === 1;
+      const containsMedia = mediaContents.length >= 1;
+      const isModified = doc[0].trigger === "modified";
+      return hasDate && isSingleDoc && containsMedia && isModified;
+    };
+
+    const unSub = onSnapshot(
+      messagesQuery,
       (snapshot) => {
-        setMessages(snapshot.docs);
-        console.log("DOC CHANGES", snapshot.docChanges());
-        console.log("MESSAGES: ", snapshot.docs);
+        const docChanges = snapshot.docChanges().map((doc) => {
+          const docData = doc.doc.data();
+          docData.id = doc.doc.id;
+          docData.trigger = doc.type;
+          docData.firebaseDoc = doc.doc;
+          return docData;
+        });
+        console.log("DOC CHANGES: ", docChanges);
+        console.log("SNAPSHOT METADATA: ", snapshot.metadata);
+
+        if (!snapshot.metadata.hasPendingWrites) {
+          setMessages((messages) => {
+            let newMessagesArray = [];
+            //check if doc change is from a media upload on the recipients client
+            if (
+              docChanges.length === 1 &&
+              messages.find((message) => message.id === docChanges[0].id)
+            ) {
+              newMessagesArray = messages.map((message) => {
+                const doc = docChanges[0];
+                if (message.id === doc.id) {
+                  return doc;
+                } else {
+                  return message;
+                }
+              });
+            } else {
+              newMessagesArray = [
+                ...docChanges.flatMap((doc) => {
+                  return doc.trigger !== "removed" ? [doc] : [];
+                }),
+                ...messages,
+              ];
+            }
+            return newMessagesArray;
+          });
+          //check if doc change is from a media upload on the senders client
+        } else if (isMediaUpload(docChanges)) {
+          setMessages((messages) => {
+            return messages.map((message) => {
+              const doc = docChanges[0];
+              if (message.id === doc.id) {
+                return doc;
+              } else {
+                return message;
+              }
+            });
+          });
+        }
       },
       (error) => {
         console.log("ERROR: ", error);
@@ -35,35 +103,64 @@ const ChatPanel = () => {
     return unSub;
   }, [chatId, dispatch]);
 
+  const handleInfiniteScroll = async (lastDoc) => {
+    const moreMessages = await getMoreMessages(chatId, lastDoc);
+    const moreMessagesData = moreMessages.docs.map((doc) => {
+      const docData = doc.data();
+      docData.id = doc.id;
+      docData.firebaseDoc = doc;
+      return docData;
+    });
+    console.log(moreMessagesData);
+    setMessages((messages) => [...messages, ...moreMessagesData]);
+  };
+
   return (
     <div className={"chat-panel-container"}>
-      <h1>Chat Panel</h1>
-      <ul></ul>
       <div className={"messages-container"}>
         <ul className={"messages"}>
-          {messages.map((message) => {
-            const messageData = message.data();
+          {messages.map((message, index) => {
             return (
-              <li key={messageData.messageDate}>
-                <h4>{messageData.displayName}</h4>
-                {messageData.message && (
+              <li key={message.id}>
+                {index === messages.length - 4 && (
+                  <Waypoint
+                    onEnter={() => {
+                      handleInfiniteScroll(
+                        messages[messages.length - 1].firebaseDoc
+                      );
+                    }}
+                  />
+                )}
+                <h4>{message.displayName}</h4>
+                {message.message && (
                   <p>
-                    {messageData.message} -{" "}
-                    {messageData.messageDate.toDate().toString()}
+                    {message.message} -{" "}
+                    {message.messageDate.toDate().toString()}
                   </p>
                 )}
                 <ul>
-                  {Object.values(messageData.media).map((file) => {
+                  {Object.keys(message.media).map((key) => {
                     return (
-                      <li key={file.fileId}>
-                        {file.status === "pending" ? (
+                      <li key={key}>
+                        {message.media[key].status === "pending" ? (
                           <p>pending</p>
-                        ) : file.type.includes("image") ? (
-                          <img src={file.downloadURL} height="100" alt="" />
-                        ) : file.type.includes("video") ? (
-                          <video controls src={file.downloadURL} height="100" />
-                        ) : file.type.includes("audio") ? (
-                          <audio controls src={file.downloadURL} />
+                        ) : message.media[key].type.includes("image") ? (
+                          <img
+                            src={message.media[key].downloadURL}
+                            height="100"
+                            alt=""
+                          />
+                        ) : message.media[key].type.includes("video") ? (
+                          <video
+                            controls
+                            src={message.media[key].downloadURL}
+                            height="100"
+                          />
+                        ) : message.media[key].type.includes("audio") ? (
+                          <audio
+                            controls
+                            src={message.media[key].downloadURL}
+                          />
                         ) : (
                           <p>file</p>
                         )}
@@ -71,16 +168,16 @@ const ChatPanel = () => {
                     );
                   })}
                 </ul>
-                {messageData.urlMetaData.status === "pending" && <p>pending</p>}
-                {messageData.urlMetaData.status === "success" && (
-                  <p>{messageData.urlMetaData.title}</p>
+                {message.urlMetaData.status === "pending" && <p>pending</p>}
+                {message.urlMetaData.status === "success" && (
+                  <p>{message.urlMetaData.title}</p>
                 )}
               </li>
             );
           })}
         </ul>
-        <MessageBox></MessageBox>
       </div>
+      <MessageBox></MessageBox>
     </div>
   );
 };

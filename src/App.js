@@ -30,9 +30,9 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        handlePresence();
         dispatch(setIsLogged(true));
         dispatch(getUserById(user.uid));
+        handlePresence();
       } else {
         dispatch(setIsInitialized(true));
       }

@@ -117,32 +117,33 @@ const MessageBox = () => {
       onDragLeave={handleDragEvent}
       onDragOver={handleDragEvent}
       onDrop={handleDragEvent}
-      className={"message-box"}
-      style={testStyle}
+      className={"message-box-container"}
     >
-      <ul className="selected-files">
-        {media.map((file) => {
-          console.log(file);
-          return (
-            <li key={file.fileData.lastModified}>
-              {file.fileData.type.includes("image") ? (
-                <img src={file.fileURL} alt="" height="100" width="100" />
-              ) : file.fileData.type.includes("video") ? (
-                <video
-                  controls
-                  src={file.fileURL}
-                  height="100"
-                  width="100"
-                ></video>
-              ) : file.fileData.type.includes("audio") ? (
-                <audio />
-              ) : (
-                <p>file</p>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+      {media[0] && (
+        <ul className="selected-files">
+          {media.map((file) => {
+            console.log(file);
+            return (
+              <li key={file.fileData.lastModified}>
+                {file.fileData.type.includes("image") ? (
+                  <img src={file.fileURL} alt="" height="100" width="100" />
+                ) : file.fileData.type.includes("video") ? (
+                  <video
+                    controls
+                    src={file.fileURL}
+                    height="100"
+                    width="100"
+                  ></video>
+                ) : file.fileData.type.includes("audio") ? (
+                  <audio />
+                ) : (
+                  <p>file</p>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <label>
           choose file
