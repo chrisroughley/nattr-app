@@ -227,8 +227,16 @@ export const initializeChat = async (members, chatType) => {
         "friendsList",
         members[0].userId
       );
-      await setDoc(userOneFriendRef, { chatId: docRef.id }, { merge: true });
-      await setDoc(userTwoFriendRef, { chatId: docRef.id }, { merge: true });
+      await setDoc(
+        userOneFriendRef,
+        { chatId: docRef.id, messageDate: serverTimestamp() },
+        { merge: true }
+      );
+      await setDoc(
+        userTwoFriendRef,
+        { chatId: docRef.id, messageDate: serverTimestamp() },
+        { merge: true }
+      );
     }
   } catch (err) {
     console.log("INITIALIZE CHAT ERROR: ", err.message);
@@ -328,6 +336,54 @@ export const getLatestChat = async (userId) => {
   );
   const querySnapshot = await getDocs(latestChatQuery);
   return querySnapshot;
+};
+export const getFriendsByUserId = async (userId) => {
+  const friendsListRef = collection(db, "users", userId, "friendsList");
+  const friendsListQuery = query(
+    friendsListRef,
+    orderBy("displayName", "asc"),
+    limit(15)
+  );
+  const querySnapshot = await getDocs(friendsListQuery);
+
+  const friendsList = querySnapshot.docs;
+
+  const friendsListData = friendsList.map((friend) => {
+    const friendData = friend.data();
+    return {
+      userId: friendData.userId,
+      displayName: friendData.displayName,
+      requestDate: friendData.requestDate.toString(),
+      firebaseDoc: friend,
+    };
+  });
+  console.log("FRIENDS LIST DATA: ", friendsListData);
+  return friendsListData;
+};
+
+export const getMoreFriends = async (userId, lastDoc) => {
+  const friendsListRef = collection(db, "users", userId, "friendsList");
+  const friendsListQuery = query(
+    friendsListRef,
+    orderBy("displayName", "asc"),
+    limit(5),
+    startAfter(lastDoc)
+  );
+  const querySnapshot = await getDocs(friendsListQuery);
+
+  const friendsList = querySnapshot.docs;
+
+  const friendsListData = friendsList.map((friend) => {
+    const friendData = friend.data();
+    return {
+      userId: friendData.userId,
+      displayName: friendData.displayName,
+      requestDate: friendData.requestDate.toString(),
+      firebaseDoc: friend,
+    };
+  });
+  console.log("FRIENDS LIST DATA: ", friendsListData);
+  return friendsListData;
 };
 
 export const getMoreMessages = async (chatId, lastDoc) => {

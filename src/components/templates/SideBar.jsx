@@ -9,7 +9,7 @@ import { clearChat } from "../../state/slices/currentChatSlice";
 import { clearFriendRequests } from "../../state/slices/friendRequestsSlice";
 import { clearFriends } from "../../state/slices/friendsSlice";
 
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { auth } from "../../utils/firebase";
 import { signOut } from "@firebase/auth";
@@ -32,8 +32,17 @@ const SideBar = () => {
       user.userId || "noUser",
       "pendingFriendRequests"
     );
-    const unSub = onSnapshot(friendRequestRef, (snapshot) => {
-      dispatch(setFriendRequests(snapshot.docs));
+    const friendRequestQuery = query(
+      friendRequestRef,
+      orderBy("requestDate", "asc")
+    );
+    const unSub = onSnapshot(friendRequestQuery, (snapshot) => {
+      const friendRequestData = snapshot.docs.map((doc) => {
+        const docData = doc.data();
+        docData.requestDate = docData.requestDate.toDate().toString();
+        return docData;
+      });
+      dispatch(setFriendRequests(friendRequestData));
     });
     return unSub;
   }, [user.userId, dispatch]);

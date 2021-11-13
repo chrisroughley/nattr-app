@@ -1,0 +1,15 @@
+.friend-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.friends {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.friend {
+  min-height: 60px;
+  max-height: 60px;
+}

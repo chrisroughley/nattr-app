@@ -6,6 +6,8 @@ import {
   rejectFriendRequest,
 } from "../../utils/firebaseUtils";
 
+import "../../styles/friendRequestListStyles.css";
+
 const FriendRequestList = () => {
   const friendRequests = useSelector(
     (state) => state.friendRequests.friendRequests
@@ -35,17 +37,16 @@ const FriendRequestList = () => {
   return (
     <div>
       <h2>Friend Requests</h2>
-      <ul>
+      <ul className={"friend-request-list-container"}>
         {friendRequests.map((friendRequest) => {
-          const friendRequestData = friendRequest.data();
           return (
-            <li key={friendRequestData.userId}>
-              <p>{friendRequestData.displayName}</p>
+            <li key={friendRequest.userId}>
+              <p>{friendRequest.displayName}</p>
               <button
                 onClick={() => {
                   handleAcceptRequest(
-                    friendRequestData.userId,
-                    friendRequestData.displayName
+                    friendRequest.userId,
+                    friendRequest.displayName
                   );
                 }}
               >
@@ -53,7 +54,7 @@ const FriendRequestList = () => {
               </button>
               <button
                 onClick={() => {
-                  handleRejectRequest(friendRequestData.userId);
+                  handleRejectRequest(friendRequest.userId);
                 }}
               >
                 decline request

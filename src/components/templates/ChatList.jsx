@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentChatId } from "../../state/slices/currentChatSlice";
 
-import { collection, onSnapshot } from "@firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 import { db } from "../../utils/firebase";
 import { getLatestChat } from "../../utils/firebaseUtils";
+
+import "../../styles/chatListStyles.css";
 
 const ChatList = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,8 @@ const ChatList = () => {
       user.userId || "noUser",
       "chatsList"
     );
-    const unSub = onSnapshot(chatsListRef, (snapshot) => {
+    const chatListQuery = query(chatsListRef, orderBy("messageDate", "asc"));
+    const unSub = onSnapshot(chatListQuery, (snapshot) => {
       setChatsList(snapshot.docs);
       console.log("CHATS LIST DATA: ", snapshot.docs);
     });
@@ -43,7 +46,7 @@ const ChatList = () => {
   return (
     <div>
       <h2>ChatsList</h2>
-      <ul>
+      <ul className={"chat-list-container"}>
         {chatsList.map((chat) => {
           const chatData = chat.data();
           return (
