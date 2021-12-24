@@ -4,7 +4,7 @@ import {
   acceptFriendRequest,
   initializeChat,
   rejectFriendRequest,
-} from "../../utils/firebaseUtils";
+} from "../../utils/firebaseFirestoreUtils";
 
 import "../../styles/friendRequestListStyles.css";
 

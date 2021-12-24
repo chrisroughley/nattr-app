@@ -10,8 +10,8 @@ import { clearFriendRequests } from "../../state/slices/friendRequestsSlice";
 import { clearFriends } from "../../state/slices/friendsSlice";
 
 import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
-import { db } from "../../utils/firebase";
-import { auth } from "../../utils/firebase";
+import { db } from "../../utils/firebaseConfig";
+import { auth } from "../../utils/firebaseConfig";
 import { signOut } from "@firebase/auth";
 
 import "../../styles/sideBarStyles.css";

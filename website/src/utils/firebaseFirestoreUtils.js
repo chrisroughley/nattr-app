@@ -23,7 +23,7 @@ import {
 
 import { httpsCallable } from "@firebase/functions";
 
-import { auth, db, functions } from "./firebase";
+import { auth, db, functions } from "./firebaseConfig";
 
 export const createUserWithEmail = async (displayName, email, password) => {
   try {

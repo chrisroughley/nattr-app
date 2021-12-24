@@ -13,8 +13,8 @@ import {
   orderBy,
   query,
 } from "@firebase/firestore";
-import { db } from "../../utils/firebase";
-import { getMoreMessages } from "../../utils/firebaseUtils";
+import { db } from "../../utils/firebaseConfig";
+import { getMoreMessages } from "../../utils/firebaseFirestoreUtils";
 
 import "../../styles/chatPanelStyles.css";
 

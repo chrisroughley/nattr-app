@@ -1,10 +1,10 @@
-import { index } from "../../utils/algolia";
+import { index } from "../../utils/algoliaConfig";
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-import { sendFriendRequest } from "../../utils/firebaseUtils";
-import { getPendingFriendRequests } from "../../utils/firebaseUtils";
+import { sendFriendRequest } from "../../utils/firebaseFirestoreUtils";
+import { getPendingFriendRequests } from "../../utils/firebaseFirestoreUtils";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";

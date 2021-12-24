@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { auth, db, functions } from "../utils/firebase";
+import { auth, db, functions } from "../utils/firebaseConfig";
 import { onAuthStateChanged } from "@firebase/auth";
 import { httpsCallable } from "@firebase/functions";
 

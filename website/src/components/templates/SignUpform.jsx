@@ -7,7 +7,7 @@ import { getUserById } from "../../state/slices/userSlice";
 
 import zxcvbn from "zxcvbn";
 
-import { createUserWithEmail } from "../../utils/firebaseUtils";
+import { createUserWithEmail } from "../../utils/firebaseFirestoreUtils";
 
 const SignUpForm = () => {
   const navigate = useNavigate();

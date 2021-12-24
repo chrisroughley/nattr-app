@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { useSelector } from "react-redux";
 
-import { sendMessage } from "../../utils/firebaseUtils";
+import { sendMessage } from "../../utils/firebaseFirestoreUtils";
 import { sendFiles } from "../../utils/firebaseStorageUtils";
 
 import { generateId } from "../../utils/componentUtils";

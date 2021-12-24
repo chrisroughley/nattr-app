@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import {
   signInUserWithEmail,
   signInWithSocial,
-} from "../../utils/firebaseUtils";
+} from "../../utils/firebaseFirestoreUtils";
 
 import { useDispatch } from "react-redux";
 import { getUserById } from "../../state/slices/userSlice";

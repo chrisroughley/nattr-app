@@ -4,9 +4,9 @@ import { useEffect } from "react";
 
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import { auth } from "./utils/firebase";
+import { auth } from "./utils/firebaseConfig";
 import { onAuthStateChanged } from "@firebase/auth";
-import { handlePresence } from "./utils/firebaseDatabaseUtils";
+import { handlePresence } from "./utils/firebaseRealtimeDatabaseUtils";
 
 import LandingPage from "./components/pages/LandingPage";
 import LoginPage from "./components/pages/LoginPage";

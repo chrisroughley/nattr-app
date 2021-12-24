@@ -4,7 +4,10 @@ import { Waypoint } from "react-waypoint";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../state/slices/listPanelSlice";
 
-import { getFriendsByUserId, getMoreFriends } from "../../utils/firebaseUtils";
+import {
+  getFriendsByUserId,
+  getMoreFriends,
+} from "../../utils/firebaseFirestoreUtils";
 
 import "../../styles/friendListStyles.css";
 
