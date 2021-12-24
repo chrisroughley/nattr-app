@@ -7,7 +7,7 @@ import {
 } from "../../utils/firebaseFirestoreUtils";
 
 import { useDispatch } from "react-redux";
-import { getUserById } from "../../state/slices/userSlice";
+import { getUserById } from "../../state/thunks";
 
 const SignInForm = () => {
   const navigate = useNavigate();

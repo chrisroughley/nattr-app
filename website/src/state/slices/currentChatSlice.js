@@ -1,26 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import { getChatByChatId } from "../thunks";
+
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../utils/firebaseConfig";
 
-export const getChatByChatId = createAsyncThunk(
-  "users/getChatByChatId",
-  async (chatId, thunkAPI) => {
-    const chatRef = doc(db, "chats", chatId);
-    try {
-      const docSnap = await getDoc(chatRef);
-      if (docSnap.exists()) {
-        const chatData = docSnap.data();
-        console.log("CHATS DATA: ", chatData);
-        return chatData;
-      } else {
-        return thunkAPI.rejectWithValue("no chat");
-      }
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.message);
-    }
-  }
-);
+// export const getChatByChatId = createAsyncThunk(
+//   "users/getChatByChatId",
+//   async (chatId, thunkAPI) => {
+//     const chatRef = doc(db, "chats", chatId);
+//     try {
+//       const docSnap = await getDoc(chatRef);
+//       if (docSnap.exists()) {
+//         const chatData = docSnap.data();
+//         console.log("CHATS DATA: ", chatData);
+//         return chatData;
+//       } else {
+//         return thunkAPI.rejectWithValue("no chat");
+//       }
+//     } catch (err) {
+//       return thunkAPI.rejectWithValue(err.message);
+//     }
+//   }
+// );
 
 export const currentChatSlice = createSlice({
   name: "currentChat",

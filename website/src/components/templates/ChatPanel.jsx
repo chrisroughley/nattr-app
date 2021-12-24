@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Waypoint } from "react-waypoint";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getChatByChatId } from "../../state/slices/currentChatSlice";
+import { getChatByChatId } from "../../state/thunks";
 
 import {
   collection,

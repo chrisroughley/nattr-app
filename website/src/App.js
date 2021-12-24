@@ -16,11 +16,8 @@ import VideoChatPage from "./components/pages/VideoChatPage";
 import BadURLPage from "./components/pages/BadURLPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserById,
-  setIsLogged,
-  setIsInitialized,
-} from "./state/slices/userSlice";
+import { setIsLogged, setIsInitialized } from "./state/slices/userSlice";
+import { getUserById } from "./state/thunks";
 
 function App() {
   const dispatch = useDispatch();
