@@ -1,26 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { getUserById } from "../thunks";
-
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
-
-// export const getUserById = createAsyncThunk(
-//   "users/getUserById",
-//   async (userId, thunkAPI) => {
-//     const docRef = doc(db, "users", userId);
-//     try {
-//       const docSnap = await getDoc(docRef);
-//       if (docSnap.exists()) {
-//         return { userId, ...docSnap.data() };
-//       } else {
-//         return thunkAPI.rejectWithValue("no user");
-//       }
-//     } catch (err) {
-//       return thunkAPI.rejectWithValue(err.message);
-//     }
-//   }
-// );
 
 export const userSlice = createSlice({
   name: "user",
