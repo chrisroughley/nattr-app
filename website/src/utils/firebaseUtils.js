@@ -337,6 +337,7 @@ export const getLatestChat = async (userId) => {
   const querySnapshot = await getDocs(latestChatQuery);
   return querySnapshot;
 };
+
 export const getFriendsByUserId = async (userId) => {
   const friendsListRef = collection(db, "users", userId, "friendsList");
   const friendsListQuery = query(
