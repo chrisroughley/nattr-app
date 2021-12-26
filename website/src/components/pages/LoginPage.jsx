@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import SignUpForm from "../templates/SignUpform";
-import SignInForm from "../templates/SignInForm";
+import SignUpForm from "../layouts/SignUpform";
+import SignInForm from "../layouts/SignInForm";
 
 const LoginPage = () => {
   return (

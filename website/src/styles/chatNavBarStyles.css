@@ -1,0 +1,8 @@
+.chat-nav-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(99, 99, 99);
+}

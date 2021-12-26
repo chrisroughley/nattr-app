@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
+import { db } from "../../utils/firebase.config";
 
 export const getChatByChatId = createAsyncThunk(
   "users/getChatByChatId",

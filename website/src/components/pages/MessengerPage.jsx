@@ -1,12 +1,11 @@
 import { useSelector } from "react-redux";
 
-import DevComponent from "../DevComponent";
-import SideBar from "../templates/SideBar";
-import FriendSearch from "../templates/FriendSearch";
-import FriendList from "../templates/FriendList";
-import ChatList from "../templates/ChatList";
-import ChatPanel from "../templates/ChatPanel";
-import FriendRequestList from "../templates/FriendRequestList";
+import SideBar from "../layouts/SideBar";
+import FriendSearch from "../layouts/FriendSearch";
+import FriendList from "../layouts/FriendList";
+import ChatList from "../layouts/ChatList";
+import ChatPanel from "../layouts/ChatPanel";
+import FriendRequestList from "../layouts/FriendRequestList";
 
 import "../../styles/messengerPageStyles.css";
 
@@ -31,7 +30,6 @@ const MessengerPage = () => {
           <ChatPanel></ChatPanel>
         </div>
       </div>
-      {/* <DevComponent></DevComponent> */}
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentChatId } from "../../state/slices/currentChatSlice";
+import { setCurrentChatId } from "../../store/slices/currentChatSlice";
 
 import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
+import { db } from "../../utils/firebase.config";
 import { getLatestChat } from "../../utils/firebaseFirestoreUtils";
 
 import "../../styles/chatListStyles.css";

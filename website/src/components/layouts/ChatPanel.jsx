@@ -1,10 +1,12 @@
-import MessageBox from "../ui-components/MessageBox";
+import MessageBox from "../components/MessageBox";
+import ChatNavBar from "../components/ChatNavBar";
+import ChatOptions from "../components/ChatOptions";
 
 import { useEffect, useState } from "react";
 import { Waypoint } from "react-waypoint";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getChatByChatId } from "../../state/thunks";
+import { getChatByChatId } from "../../store/thunks";
 
 import {
   collection,
@@ -13,7 +15,7 @@ import {
   orderBy,
   query,
 } from "@firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
+import { db } from "../../utils/firebase.config";
 import { getMoreMessages } from "../../utils/firebaseFirestoreUtils";
 
 import "../../styles/chatPanelStyles.css";
@@ -22,6 +24,7 @@ const ChatPanel = () => {
   const dispatch = useDispatch();
   const chatId = useSelector((state) => state.currentChat.currentChatId);
   const [messages, setMessages] = useState([]);
+  const [isChatOptionsOpen, setIsChatOptionsOpen] = useState(false);
 
   useEffect(() => {
     if (!chatId) return;
@@ -117,6 +120,10 @@ const ChatPanel = () => {
 
   return (
     <div className={"chat-panel-container"}>
+      {isChatOptionsOpen && (
+        <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen}></ChatOptions>
+      )}
+      <ChatNavBar setIsChatOptionsOpen={setIsChatOptionsOpen}></ChatNavBar>
       <div className={"messages-container"}>
         <ul className={"messages"}>
           {messages.map((message, index) => {

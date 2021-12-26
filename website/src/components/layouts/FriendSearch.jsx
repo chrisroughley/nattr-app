@@ -1,4 +1,4 @@
-import { index } from "../../utils/algoliaConfig";
+import { index } from "../../utils/algolia.config";
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { sendFriendRequest } from "../../utils/firebaseFirestoreUtils";
 import { getPendingFriendRequests } from "../../utils/firebaseFirestoreUtils";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedPanel } from "../../state/slices/listPanelSlice";
+import { setSelectedPanel } from "../../store/slices/listPanelSlice";
 
 const FriendSearch = () => {
   const dispatch = useDispatch();

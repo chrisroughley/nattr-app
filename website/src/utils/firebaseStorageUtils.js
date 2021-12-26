@@ -2,7 +2,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 import { doc, setDoc } from "@firebase/firestore";
 
-import { db, storage } from "./firebaseConfig";
+import { db, storage } from "./firebase.config";
 
 export const sendFiles = async (files, chatId, messageId) => {
   const messageRef = doc(db, "chats", chatId, "messages", messageId);

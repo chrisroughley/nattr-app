@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import { useDispatch } from "react-redux";
-import { getUserById } from "../../state/thunks";
+import { getUserById } from "../../store/thunks";
 
 import zxcvbn from "zxcvbn";
 

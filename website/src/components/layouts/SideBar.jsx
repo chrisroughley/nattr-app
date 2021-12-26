@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedPanel } from "../../state/slices/listPanelSlice";
-import { setFriendRequests } from "../../state/slices/friendRequestsSlice";
-import { setIsLogged, clearUser } from "../../state/slices/userSlice";
-import { clearChat } from "../../state/slices/currentChatSlice";
-import { clearFriendRequests } from "../../state/slices/friendRequestsSlice";
-import { clearFriends } from "../../state/slices/friendsSlice";
+import { setSelectedPanel } from "../../store/slices/listPanelSlice";
+import { setFriendRequests } from "../../store/slices/friendRequestsSlice";
+import { setIsLogged, clearUser } from "../../store/slices/userSlice";
+import { clearChat } from "../../store/slices/currentChatSlice";
+import { clearFriendRequests } from "../../store/slices/friendRequestsSlice";
+import { clearFriends } from "../../store/slices/friendsSlice";
 
 import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
-import { auth } from "../../utils/firebaseConfig";
+import { db } from "../../utils/firebase.config";
+import { auth } from "../../utils/firebase.config";
 import { signOut } from "@firebase/auth";
 
 import "../../styles/sideBarStyles.css";

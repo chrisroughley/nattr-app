@@ -6,10 +6,10 @@
 .pnp.js
 
 # firebase config
-/src/utils/firebaseConfig.js
+/src/utils/firebase.config.js
 
 # algolia initialization
-/src/utils/algoliaConfig.js
+/src/utils/algolia.config.js
 
 # testing
 /coverage

@@ -6,8 +6,8 @@ import {
   serverTimestamp,
   push,
 } from "firebase/database";
-import { database } from "./firebaseConfig";
-import { auth } from "./firebaseConfig";
+import { database } from "./firebase.config";
+import { auth } from "./firebase.config";
 
 export const handlePresence = () => {
   const uid = auth.currentUser.uid;

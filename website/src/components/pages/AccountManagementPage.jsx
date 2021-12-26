@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router";
 
 const AccountManagementPage = () => {
-  const { goBack } = useNavigate();
+  const navigate = useNavigate();
   return (
     <div>
       <h1>Account Management Page</h1>
-      <button onClick={goBack}>Go back</button>
+      <button
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        Go back
+      </button>
     </div>
   );
 };

@@ -1,0 +1,8 @@
+.chat-options-container {
+  background-color: rgb(53, 86, 230);
+  position: absolute;
+  padding: 15px;
+  right: 0px;
+  min-width: 20vw;
+  min-height: 100vh;
+}

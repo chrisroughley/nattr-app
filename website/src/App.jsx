@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import { auth } from "./utils/firebaseConfig";
+import { auth } from "./utils/firebase.config";
 import { onAuthStateChanged } from "@firebase/auth";
 import { handlePresence } from "./utils/firebaseRealtimeDatabaseUtils";
 
@@ -16,8 +16,8 @@ import VideoChatPage from "./components/pages/VideoChatPage";
 import BadURLPage from "./components/pages/BadURLPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setIsLogged, setIsInitialized } from "./state/slices/userSlice";
-import { getUserById } from "./state/thunks";
+import { setIsLogged, setIsInitialized } from "./store/slices/userSlice";
+import { getUserById } from "./store/thunks";
 
 function App() {
   const dispatch = useDispatch();
