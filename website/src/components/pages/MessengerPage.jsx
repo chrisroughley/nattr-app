@@ -4,7 +4,7 @@ import SideBar from "../layouts/SideBar";
 import FriendSearch from "../layouts/FriendSearch";
 import FriendList from "../layouts/FriendList";
 import ChatList from "../layouts/ChatList";
-import ChatPanel from "../layouts/ChatPanel";
+import Chat from "../layouts/Chat";
 import FriendRequestList from "../layouts/FriendRequestList";
 
 import "../../styles/messengerPageStyles.css";
@@ -15,10 +15,8 @@ const MessengerPage = () => {
   return (
     <div>
       <div className={"messenger-container"}>
-        <div className={"side-bar-panel"}>
+        <div className={"side-panel-container"}>
           <SideBar></SideBar>
-        </div>
-        <div className={"social-lists-panel"}>
           {listPanel === "chatsList" && <ChatList></ChatList>}
           {listPanel === "friendsList" && <FriendList></FriendList>}
           {listPanel === "friendSearch" && <FriendSearch></FriendSearch>}
@@ -26,9 +24,7 @@ const MessengerPage = () => {
             <FriendRequestList></FriendRequestList>
           )}
         </div>
-        <div className={"chat-panel"}>
-          <ChatPanel></ChatPanel>
-        </div>
+        <Chat></Chat>
       </div>
     </div>
   );

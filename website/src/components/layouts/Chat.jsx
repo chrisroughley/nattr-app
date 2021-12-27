@@ -18,7 +18,7 @@ import {
 import { db } from "../../utils/firebase.config";
 import { getMoreMessages } from "../../utils/firebaseFirestoreUtils";
 
-import "../../styles/chatPanelStyles.css";
+import "../../styles/chatStyles.css";
 
 const ChatPanel = () => {
   const dispatch = useDispatch();

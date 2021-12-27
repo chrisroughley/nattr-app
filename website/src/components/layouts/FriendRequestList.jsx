@@ -35,9 +35,9 @@ const FriendRequestList = () => {
   };
 
   return (
-    <div>
+    <div className={"friend-request-list-container"}>
       <h2>Friend Requests</h2>
-      <ul className={"friend-request-list-container"}>
+      <ul className={"friend-request-list"}>
         {friendRequests.map((friendRequest) => {
           return (
             <li key={friendRequest.userId}>

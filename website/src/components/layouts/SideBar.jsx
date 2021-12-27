@@ -75,7 +75,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className="container">
+    <div className="side-bar-container">
       <h1>Side Bar</h1>
       <button
         onClick={() => {
@@ -91,7 +91,7 @@ const SideBar = () => {
       >
         friends{friendRequests.length ? (": ", friendRequests.length) : ""}
       </button>
-      <button onClick={openVideoChat}>Video</button>
+      <button onClick={openVideoChat}>Call</button>
       <Link to="/account">Account Management</Link>
       <button onClick={handleSignOut}>Sign Out</button>
     </div>

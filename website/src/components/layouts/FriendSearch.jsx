@@ -9,6 +9,8 @@ import { getPendingFriendRequests } from "../../utils/firebaseFirestoreUtils";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../store/slices/listPanelSlice";
 
+import "../../styles/friendSearchStyles.css";
+
 const FriendSearch = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -50,7 +52,7 @@ const FriendSearch = () => {
   };
 
   return (
-    <div>
+    <div className="friend-search-container">
       <h2>Friend Search</h2>
       <button onClick={handleSetPanel}>friends list</button>
       <form onSubmit={handleSubmit(onSubmit, onError)}>

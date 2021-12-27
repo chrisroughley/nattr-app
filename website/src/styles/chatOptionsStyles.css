@@ -1,8 +1,20 @@
 .chat-options-container {
   background-color: rgb(53, 86, 230);
   position: absolute;
-  padding: 15px;
   right: 0px;
-  min-width: 20vw;
+  width: 400px;
   min-height: 100vh;
+  max-height: 100vh;
+}
+
+@media only screen and (max-width: 1000px) {
+  .chat-options-container {
+    width: calc(100% - 300px);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .chat-options-container {
+    width: 100%;
+  }
 }

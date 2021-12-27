@@ -44,9 +44,9 @@ const ChatList = () => {
   };
 
   return (
-    <div>
+    <div className={"chat-list-container"}>
       <h2>ChatsList</h2>
-      <ul className={"chat-list-container"}>
+      <ul className="chat-list">
         {chatsList.map((chat) => {
           const chatData = chat.data();
           return (
