@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedPanel } from "../../store/slices/listPanelSlice";
+import { setSelectedPanel } from "../../store/slices/sidePanelSlice";
 import { setFriendRequests } from "../../store/slices/friendRequestsSlice";
 import { setIsLogged, clearUser } from "../../store/slices/userSlice";
 import { clearChat } from "../../store/slices/currentChatSlice";

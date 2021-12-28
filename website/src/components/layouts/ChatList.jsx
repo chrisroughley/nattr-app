@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentChatId } from "../../store/slices/currentChatSlice";
+import { setIsSidePanelOpen } from "../../store/slices/sidePanelSlice";
 
 import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 import { db } from "../../utils/firebase.config";
@@ -41,6 +42,7 @@ const ChatList = () => {
 
   const handleChat = (chatId) => {
     dispatch(setCurrentChatId(chatId));
+    dispatch(setIsSidePanelOpen(false));
   };
 
   return (

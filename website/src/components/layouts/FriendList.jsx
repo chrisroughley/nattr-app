@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Waypoint } from "react-waypoint";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedPanel } from "../../store/slices/listPanelSlice";
+import { setSelectedPanel } from "../../store/slices/sidePanelSlice";
 
 import {
   getFriendsByUserId,

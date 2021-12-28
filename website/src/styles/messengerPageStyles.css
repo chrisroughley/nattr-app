@@ -5,9 +5,15 @@
 }
 
 .side-panel-container {
+  display: flex;
+  flex-direction: column;
   max-width: 350px;
   min-width: 350px;
   background-color: tan;
+}
+
+.side-panel-visible {
+  visibility: visible;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -19,11 +25,14 @@
 
 @media only screen and (max-width: 800px) {
   .side-panel-container {
+    flex-direction: column-reverse;
     position: absolute;
     top: 0px;
     left: 0px;
     min-width: 100vw;
     max-width: 100vw;
+  }
+  .side-panel-hidden {
     visibility: hidden;
   }
 }

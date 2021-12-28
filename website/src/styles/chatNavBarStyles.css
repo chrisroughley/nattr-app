@@ -6,3 +6,13 @@
   align-items: center;
   background-color: rgb(99, 99, 99);
 }
+
+.chat-back-button {
+  display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .chat-back-button {
+    display: inline-block;
+  }
+}

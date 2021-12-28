@@ -10,17 +10,24 @@ import FriendRequestList from "../layouts/FriendRequestList";
 import "../../styles/messengerPageStyles.css";
 
 const MessengerPage = () => {
-  const listPanel = useSelector((state) => state.listPanel.selectedPanel);
+  const sidePanel = useSelector((state) => state.sidePanel.selectedPanel);
+  const isListPanelOpen = useSelector(
+    (state) => state.sidePanel.isSidePanelOpen
+  );
 
   return (
     <div>
       <div className={"messenger-container"}>
-        <div className={"side-panel-container"}>
+        <div
+          className={`side-panel-container ${
+            isListPanelOpen ? "side-panel-visible" : "side-panel-hidden"
+          }`}
+        >
           <SideBar></SideBar>
-          {listPanel === "chatsList" && <ChatList></ChatList>}
-          {listPanel === "friendsList" && <FriendList></FriendList>}
-          {listPanel === "friendSearch" && <FriendSearch></FriendSearch>}
-          {listPanel === "friendRequests" && (
+          {sidePanel === "chatsList" && <ChatList></ChatList>}
+          {sidePanel === "friendsList" && <FriendList></FriendList>}
+          {sidePanel === "friendSearch" && <FriendSearch></FriendSearch>}
+          {sidePanel === "friendRequests" && (
             <FriendRequestList></FriendRequestList>
           )}
         </div>

@@ -2,12 +2,12 @@ import { combineReducers } from "redux";
 import userReducer from "../slices/userSlice";
 import friendsReducer from "../slices/friendsSlice";
 import currentChatReducer from "../slices/currentChatSlice";
-import listPanelReducer from "../slices/listPanelSlice";
+import sidePanelReducer from "../slices/sidePanelSlice";
 import friendRequestsReducer from "../slices/friendRequestsSlice";
 
 export default combineReducers({
   friendRequests: friendRequestsReducer,
-  listPanel: listPanelReducer,
+  sidePanel: sidePanelReducer,
   currentChat: currentChatReducer,
   user: userReducer,
   friends: friendsReducer,
