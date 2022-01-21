@@ -14,7 +14,7 @@ import { db } from "../../utils/firebase.config";
 import { auth } from "../../utils/firebase.config";
 import { signOut } from "@firebase/auth";
 
-import "../../styles/sideBarStyles.css";
+import "../../styles/main.css";
 
 const SideBar = () => {
   const navigate = useNavigate();

@@ -9,7 +9,7 @@ import {
   getMoreFriends,
 } from "../../utils/firebaseFirestoreUtils";
 
-import "../../styles/friendListStyles.css";
+import "../../styles/main.css";
 
 const FriendList = () => {
   const dispatch = useDispatch();

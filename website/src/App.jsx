@@ -1,5 +1,3 @@
-import "./App.css";
-
 import { useEffect } from "react";
 
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -36,6 +34,7 @@ function App() {
     });
   }, [dispatch]);
 
+  //update root --app-height style for mobile devices. Prevents UI glitches when mobile native url and nav bars are hidden
   const appHeight = () => {
     document.documentElement.style.setProperty(
       "--app-height",
@@ -47,7 +46,7 @@ function App() {
   appHeight();
 
   return (
-    <div className="App">
+    <div>
       {isInitialized ? (
         <Routes>
           <Route

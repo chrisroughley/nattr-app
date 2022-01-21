@@ -7,7 +7,7 @@ import ChatList from "../layouts/ChatList";
 import Chat from "../layouts/Chat";
 import FriendRequestList from "../layouts/FriendRequestList";
 
-import "../../styles/messengerPageStyles.css";
+import "../../styles/main.css";
 
 const MessengerPage = () => {
   const sidePanel = useSelector((state) => state.sidePanel.selectedPanel);

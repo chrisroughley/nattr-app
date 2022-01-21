@@ -9,7 +9,7 @@ import { getPendingFriendRequests } from "../../utils/firebaseFirestoreUtils";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedPanel } from "../../store/slices/sidePanelSlice";
 
-import "../../styles/friendSearchStyles.css";
+import "../../styles/main.css";
 
 const FriendSearch = () => {
   const dispatch = useDispatch();

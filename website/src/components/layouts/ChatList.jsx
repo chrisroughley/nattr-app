@@ -8,7 +8,7 @@ import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 import { db } from "../../utils/firebase.config";
 import { getLatestChat } from "../../utils/firebaseFirestoreUtils";
 
-import "../../styles/chatListStyles.css";
+import "../../styles/main.css";
 
 const ChatList = () => {
   const dispatch = useDispatch();

@@ -1,0 +1,289 @@
+.chat-list-container {
+  width: 100%;
+  min-height: 70vh;
+  max-height: 70vh;
+  background-color: tan;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chat-list {
+  overflow-y: scroll;
+}
+
+.chat-nav-container {
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #636363;
+}
+
+.chat-back-button {
+  display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .chat-back-button {
+    display: inline-block;
+  }
+}
+
+.chat-options-container {
+  background-color: #3556e6;
+  position: absolute;
+  right: 0px;
+  width: 400px;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+@media only screen and (max-width: 1000px) {
+  .chat-options-container {
+    width: calc(100% - 300px);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .chat-options-container {
+    width: 100%;
+  }
+}
+
+:root {
+  --app-height: 100vh;
+}
+
+.chat-panel-container {
+  width: 100%;
+  height: var(--app-height);
+  /* max-height: 100vh;
+  min-height: 100vh; */
+  background-color: slategray;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  overflow: hidden;
+}
+
+.messages-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.messages {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  height: 100%;
+  overflow-y: scroll;
+  margin: 0;
+}
+
+.friend-list-container {
+  width: 100%;
+  min-height: 70vh;
+  max-height: 70vh;
+  background-color: tan;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.friends {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow-y: scroll;
+}
+
+.friend {
+  min-height: 60px;
+  max-height: 60px;
+}
+
+.friend-request-list-container {
+  width: 100%;
+  min-height: 70vh;
+  max-height: 70vh;
+  background-color: tan;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.friend-request-list {
+  overflow-y: scroll;
+}
+
+.friend-search-container {
+  width: 100%;
+  min-height: 70vh;
+  max-height: 70vh;
+  background-color: tan;
+}
+
+.message-box-container {
+  background-color: #636363;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 15px 15px 15px 15px;
+}
+
+.selected-files {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.messenger-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  overflow: hidden;
+}
+
+.side-panel-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 350px;
+  min-width: 350px;
+  background-color: tan;
+}
+
+.side-panel-visible {
+  visibility: visible;
+}
+
+@media only screen and (max-width: 1000px) {
+  .side-panel-container {
+    max-width: 300px;
+    min-width: 300px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .side-panel-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    min-width: 100vw;
+    max-width: 100vw;
+  }
+  .side-panel-hidden {
+    visibility: hidden;
+  }
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.side-bar-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  max-height: 30vh;
+  min-height: 30vh;
+  background-color: teal;
+}
+
+@media only screen and (max-width: 800px) {
+  .side-bar-container {
+    overflow: hidden;
+  }
+}
+
+body {
+  margin: 0;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body li {
+  list-style: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+/*# sourceMappingURL=main.css.map */

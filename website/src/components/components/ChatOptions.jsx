@@ -1,4 +1,4 @@
-import "../../styles/chatOptionsStyles.css";
+import "../../styles/main.css";
 
 const ChatOptions = ({ setIsChatOptionsOpen }) => {
   return (

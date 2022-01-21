@@ -8,7 +8,7 @@ import { sendFiles } from "../../utils/firebaseStorageUtils";
 
 import { generateId } from "../../utils/componentUtils";
 
-import "../../styles/messageBoxStyles.css";
+import "../../styles/main.css";
 
 const MessageBox = () => {
   const chatId = useSelector((state) => state.currentChat.currentChatId);

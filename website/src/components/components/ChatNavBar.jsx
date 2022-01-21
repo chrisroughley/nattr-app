@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setIsSidePanelOpen } from "../../store/slices/sidePanelSlice";
 
-import "../../styles/chatNavBarStyles.css";
+import "../../styles/main.css";
 
 const ChatNav = ({ setIsChatOptionsOpen }) => {
   const dispatch = useDispatch();

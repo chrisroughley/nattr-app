@@ -6,7 +6,7 @@ import {
   rejectFriendRequest,
 } from "../../utils/firebaseFirestoreUtils";
 
-import "../../styles/friendRequestListStyles.css";
+import "../../styles/main.css";
 
 const FriendRequestList = () => {
   const friendRequests = useSelector(
