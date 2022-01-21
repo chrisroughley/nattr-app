@@ -108,10 +108,6 @@ const MessageBox = () => {
     }
   };
 
-  const testStyle = {
-    backgroundColor: messageBoxColor,
-  };
-
   return (
     <div
       onDragLeave={handleDragEvent}

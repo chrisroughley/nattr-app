@@ -16,13 +16,12 @@ const ChatList = () => {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    const asyncWrapper = async () => {
+    (async () => {
       const latestChat = await getLatestChat(user.userId);
       if (!latestChat.empty) {
         dispatch(setCurrentChatId(latestChat.docs[0].data().chatId));
       }
-    };
-    asyncWrapper();
+    })();
   }, [user.userId, dispatch]);
 
   useEffect(() => {
