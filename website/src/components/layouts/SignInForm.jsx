@@ -9,6 +9,9 @@ import {
 import { useDispatch } from "react-redux";
 import { getUserById } from "../../store/thunks";
 
+import "../../styles/main.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const SignInForm = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, setValue } = useForm();
@@ -47,36 +50,49 @@ const SignInForm = () => {
   };
 
   return (
-    <div>
+    <div className="sign-in-form-container">
       <h1>Sign In</h1>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <label>
-          Email
-          <input type="text" {...register("email", registerOptions.email)} />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            {...register("password", registerOptions.password)}
+      <div className="social-sign-in-container">
+        <button
+          className="social-buttons"
+          onClick={() => {
+            handleSocialSignIn("google");
+          }}
+        >
+          <FontAwesomeIcon
+            icon={["fab", "google-plus-g"]}
+            size="lg"
+            color="#000000"
           />
-        </label>
-        <input type="submit" value="submit" />
+        </button>
+        <button
+          className="social-buttons"
+          onClick={() => {
+            handleSocialSignIn("facebook");
+          }}
+        >
+          <FontAwesomeIcon
+            icon={["fab", "facebook-f"]}
+            size="lg"
+            color="#000000"
+          />
+        </button>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <input
+          className="form-input-field"
+          type="text"
+          placeholder="Email"
+          {...register("email", registerOptions.email)}
+        />
+        <input
+          className="form-input-field"
+          type="password"
+          placeholder="Password"
+          {...register("password", registerOptions.password)}
+        />
+        <input className="submit-button" type="submit" value="SIGN IN" />
       </form>
-      <button
-        onClick={() => {
-          handleSocialSignIn("google");
-        }}
-      >
-        sign in with google
-      </button>
-      <button
-        onClick={() => {
-          handleSocialSignIn("facebook");
-        }}
-      >
-        sign in with facebook
-      </button>
     </div>
   );
 };

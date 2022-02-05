@@ -17,6 +17,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsLogged, setIsInitialized } from "./store/slices/userSlice";
 import { getUserById } from "./store/thunks";
 
+//update root --app-height style for mobile devices. Prevents UI glitches when native mobile url and nav bars are hidden
+const appHeight = () => {
+  document.documentElement.style.setProperty(
+    "--app-height",
+    `${window.innerHeight}px`
+  );
+};
+appHeight();
+
+window.addEventListener("resize", appHeight);
+
 function App() {
   const dispatch = useDispatch();
   const isLogged = useSelector((state) => state.user.isLogged);
@@ -33,17 +44,6 @@ function App() {
       }
     });
   }, [dispatch]);
-
-  //update root --app-height style for mobile devices. Prevents UI glitches when mobile native url and nav bars are hidden
-  const appHeight = () => {
-    document.documentElement.style.setProperty(
-      "--app-height",
-      `${window.innerHeight}px`
-    );
-  };
-
-  window.addEventListener("resize", appHeight);
-  appHeight();
 
   return (
     <div>

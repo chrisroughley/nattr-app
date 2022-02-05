@@ -9,6 +9,8 @@ import zxcvbn from "zxcvbn";
 
 import { createUserWithEmail } from "../../utils/firebaseFirestoreUtils";
 
+import "../../styles/main.css";
+
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [passwordStrength, setPasswordStrength] = useState(0);
@@ -80,37 +82,38 @@ const SignUpForm = () => {
   };
 
   return (
-    <div>
+    <div className="sign-up-form-container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <label>
-          Display Name:
-          <input
-            type="text"
-            {...register("displayName", registerOptions.displayName)}
-          />
-        </label>
-        <label>
-          Email:
-          <input type="text" {...register("email", registerOptions.email)} />
-        </label>
-        <label>
-          Password:
-          <input
-            onInput={passwordCheck}
-            type="password"
-            {...register("password", registerOptions.password)}
-          />
-          Confirm Password:
-          <input
-            type="password"
-            {...register(
-              "confirmationPassword",
-              registerOptions.confirmationPassword
-            )}
-          />
-        </label>
-        <input type="submit" value="submit" />
+        <input
+          className="form-input-field"
+          type="text"
+          {...register("displayName", registerOptions.displayName)}
+          placeholder="Display Name"
+        />
+        <input
+          className="form-input-field"
+          type="text"
+          {...register("email", registerOptions.email)}
+          placeholder="Email"
+        />
+        <input
+          className="form-input-field"
+          onInput={passwordCheck}
+          type="password"
+          {...register("password", registerOptions.password)}
+          placeholder="Password"
+        />
+        <input
+          className="form-input-field"
+          type="password"
+          {...register(
+            "confirmationPassword",
+            registerOptions.confirmationPassword
+          )}
+          placeholder="Confirm Password"
+        />
+        <input className="submit-button" type="submit" value="SIGN UP" />
       </form>
     </div>
   );
