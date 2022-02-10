@@ -2,12 +2,50 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: rgb(25, 114, 84);
+  background-color: #fafaff;
+  border-radius: 5px 0px 0px 5px;
   width: 50%;
   height: 100%;
-  border-radius: 10px 0px 0px 10px;
   form {
     display: flex;
     flex-direction: column;
+  }
+  h2 {
+    margin-bottom: 25px;
+  }
+  h3 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+    color: #838996;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .sign-up-form-container {
+    h2 {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .sign-up-form-container {
+    h2 {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .sign-up-form-container {
+    display: none;
+    width: 100%;
+    position: absolute;
+    left: 0%;
+    border-radius: 5px;
+    background-color: rgba(245, 222, 179, 0);
   }
 }

@@ -19,12 +19,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="login-page-container">
       <div className="login-form-container">
         <SignUpForm></SignUpForm>
-        <SignInForm></SignInForm>
+        <SignInForm toggleOverlay={toggleOverlay}></SignInForm>
         <div className={`overlay-container ${overlayPosition}`}>
           <button onClick={toggleOverlay}>TOGGLE OVERLAY</button>
+          {/* <div className="test"></div> */}
         </div>
       </div>
     </div>

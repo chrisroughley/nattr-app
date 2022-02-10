@@ -2,30 +2,90 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 15px;
-  background-color: rgb(88, 146, 127);
+  background-color: #fafaff;
   width: 50%;
   height: 100%;
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 5px 5px 0px;
   form {
     display: flex;
     flex-direction: column;
+  }
+  h3 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+    color: #838996;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .sign-in-form-container {
+    width: 100%;
+    position: absolute;
+    left: 0%;
+    border-radius: 5px;
+  }
+}
+
+.login-options-container {
+  display: flex;
+  flex-direction: row;
+  width: 64%;
+  justify-content: space-between;
+  margin: auto;
+  p {
+    font-size: 12px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: #6e7480;
+  }
+  p:hover {
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .login-options-container {
+    width: 84%;
   }
 }
 
 .social-sign-in-container {
   display: flex;
   flex-direction: row;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
   justify-content: center;
   gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
 .social-buttons {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  border-style: none;
+  background-color: #fafaff;
+  transition: 0.2s;
+}
+
+.social-buttons:hover {
+  transform: scale(1.1);
+}
+
+.social-icon {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 15px;
   border-style: solid;
-  border-color: rgb(201, 201, 201);
+  border-width: 1px;
+  border-color: rgb(230, 230, 230);
 }
 
 .social-buttons:hover {

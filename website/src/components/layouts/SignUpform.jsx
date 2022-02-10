@@ -42,6 +42,7 @@ const SignUpForm = () => {
     }
   };
 
+  const handleSocialSignIn = () => {};
   const onError = (error) => {
     console.log("SIGN UP FORM ERROR: ", error);
   };
@@ -83,7 +84,7 @@ const SignUpForm = () => {
 
   return (
     <div className="sign-up-form-container">
-      <h1>Sign Up</h1>
+      <h2>Create account</h2>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <input
           className="form-input-field"
@@ -115,6 +116,37 @@ const SignUpForm = () => {
         />
         <input className="submit-button" type="submit" value="SIGN UP" />
       </form>
+      <h3>or sign up using</h3>
+      <div className="social-sign-in-container">
+        <button
+          className="social-buttons"
+          onClick={() => {
+            handleSocialSignIn("google");
+          }}
+        >
+          <img
+            className="social-icon"
+            src="https://img.icons8.com/fluency/48/000000/google-logo.png"
+          />
+        </button>
+        <button
+          className="social-buttons"
+          onClick={() => {
+            handleSocialSignIn("facebook");
+          }}
+        >
+          <img
+            className="social-icon"
+            src="https://img.icons8.com/fluency/48/000000/facebook-new.png"
+          />
+        </button>
+        <button className="social-buttons">
+          <img
+            className="social-icon"
+            src="https://img.icons8.com/ios-filled/50/000000/mac-os.png"
+          />
+        </button>
+      </div>
     </div>
   );
 };
