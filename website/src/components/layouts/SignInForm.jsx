@@ -51,8 +51,7 @@ const SignInForm = ({ toggleOverlay }) => {
 
   return (
     <div className="sign-in-form-container">
-      <h2>Natter</h2>
-      {/* <h3>using email and password</h3> */}
+      <h2>Sign In</h2>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <input
           className="form-input-field"
@@ -66,7 +65,7 @@ const SignInForm = ({ toggleOverlay }) => {
           placeholder="Password"
           {...register("password", registerOptions.password)}
         />
-        <div className="login-options-container">
+        {/* <div className="login-options-container">
           <p>Forgot password?</p>
           <p
             onClick={() => {
@@ -75,38 +74,37 @@ const SignInForm = ({ toggleOverlay }) => {
           >
             Register
           </p>
-        </div>
+        </div> */}
         <input className="submit-button" type="submit" value="Log in" />
       </form>
-      <h3>or log in using</h3>
+      <h3>or</h3>
       <div className="social-sign-in-container">
         <button
-          className="social-buttons"
+          className="social-buttons google"
           onClick={() => {
             handleSocialSignIn("google");
           }}
         >
-          <img
-            className="social-icon"
-            src="https://img.icons8.com/fluency/48/000000/google-logo.png"
+          <FontAwesomeIcon
+            color="white"
+            size="lg"
+            icon={["fab", "google-plus-g"]}
           />
         </button>
         <button
-          className="social-buttons"
+          className="social-buttons facebook"
           onClick={() => {
             handleSocialSignIn("facebook");
           }}
         >
-          <img
-            className="social-icon"
-            src="https://img.icons8.com/fluency/48/000000/facebook-new.png"
+          <FontAwesomeIcon
+            color="white"
+            size="m"
+            icon={["fab", "facebook-f"]}
           />
         </button>
-        <button className="social-buttons">
-          <img
-            className="social-icon"
-            src="https://img.icons8.com/ios-filled/50/000000/mac-os.png"
-          />
+        <button className="social-buttons apple">
+          <FontAwesomeIcon color="black" size="lg" icon={["fab", "apple"]} />
         </button>
       </div>
     </div>

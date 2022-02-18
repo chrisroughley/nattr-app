@@ -1,8 +1,24 @@
 .login-page-container {
   width: 100vw;
   height: 100vh;
-  background-image: url("../assets/colorful-tribal-ethnic-seamless-pattern-vector-10038553.jpg");
-  background-size: contain;
+  background-image: url("../assets/tile_background.png");
+  background-size: cover;
+  h1 {
+    color: white;
+    font-size: 120px;
+    text-align: left;
+    margin: auto;
+    background: linear-gradient(
+      150deg,
+      #69168f,
+      #dd07c0,
+      #e94057,
+      #f52626,
+      #f59b26
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .login-form-container {
@@ -15,10 +31,10 @@
   top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.685), 0 10px 28px rgba(0, 0, 0, 0.603);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.356), 0 10px 28px rgba(0, 0, 0, 0.349);
   h2 {
     font-family: "Comforter", cursive;
-    color: #464952;
+    color: #f1f1f1;
     margin-bottom: 50px;
     font-size: 46px;
   }
@@ -59,17 +75,19 @@
   }
 }
 
-.test {
-  height: 100%;
-  width: 100%;
-  background-image: url("../assets/10076.png");
-}
-
 .overlay-container {
-  width: 50%;
+  width: 60%;
   height: 100%;
-  background-color: #004b4b;
+  border-style: solid;
+  border-width: 0px 1px 0px 0px;
+  border-color: rgb(54, 54, 54);
+  border-radius: 0px;
+  background-color: #000000;
   position: absolute;
+  // display: flex;
+  // flex-direction: column;
+
+  // justify-content: center;
 }
 
 .overlay-right {
@@ -99,11 +117,11 @@
 }
 
 .form-input-field {
-  background-color: #eef0f2;
-  width: 60%;
+  background-color: #ffffff;
+  width: 80%;
   height: 30px;
   margin: auto;
-  margin-top: 15px;
+  margin-top: 25px;
   padding: 5px 15px 5px 15px;
   border-radius: 2px;
   border-style: none;
@@ -113,7 +131,7 @@
 }
 
 .form-input-field::placeholder {
-  color: #707480;
+  color: #7c808b;
   font-size: 12px;
 }
 
@@ -126,7 +144,7 @@
 }
 
 .form-input-field:hover {
-  background-color: #e7e7e7;
+  background-color: #ffffff;
 }
 
 .form-input-field:focus {
@@ -135,24 +153,34 @@
 }
 
 .submit-button {
-  width: calc(60% + 30px);
+  width: calc(80% + 30px);
   height: 40px;
   border-radius: 2px;
   border-style: none;
   margin: auto;
-  margin-top: 15px;
-  margin-bottom: 20px;
+  margin-top: 35px;
+  margin-bottom: 15px;
+
   font-size: 12px;
   letter-spacing: 1px;
   color: rgb(255, 255, 255);
-  background-color: #009b9b;
+  background: linear-gradient(
+    60deg,
+    #69168f,
+    #dd07c0,
+    #e94057,
+    #f52626,
+    #f59b26
+  );
+  background-size: 260px 280px;
+
   font-family: "Roboto", sans-serif;
   font-weight: 500;
-  transition: 0.2s ease-in;
+  transition: 0.7s ease-in-out;
 }
 
 .submit-button:hover {
-  background-color: #168661;
+  background-position-y: -180px;
 }
 
 @media only screen and (max-width: 800px) {

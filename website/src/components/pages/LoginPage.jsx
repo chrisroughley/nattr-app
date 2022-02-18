@@ -20,13 +20,12 @@ const LoginPage = () => {
 
   return (
     <div className="login-page-container">
-      <div className="login-form-container">
+      {/* <div className="login-form-container">
         <SignUpForm></SignUpForm>
-        <SignInForm toggleOverlay={toggleOverlay}></SignInForm>
-        <div className={`overlay-container ${overlayPosition}`}>
-          <button onClick={toggleOverlay}>TOGGLE OVERLAY</button>
-          {/* <div className="test"></div> */}
-        </div>
+      </div> */}
+      <SignInForm toggleOverlay={toggleOverlay}></SignInForm>
+      <div className={`overlay-container ${overlayPosition}`}>
+        <h1>New to Natter?</h1>
       </div>
     </div>
   );
